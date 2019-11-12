@@ -15,8 +15,8 @@ import java.util.*;
 public class Zoo implements Serializable {
 
     /*
-    *Lehetőséget ad az állatkert költözésére egy másik állatkertbe. (Beágyazott osztály segítségével.
-    */
+     *Lehetőséget ad az állatkert költözésére egy másik állatkertbe. (Beágyazott osztály segítségével.
+     */
     public static class Move {
 
         public static void moved(Zoo from, Zoo to) {
@@ -222,7 +222,7 @@ public class Zoo implements Serializable {
 
     /*
      * Sorts the animal by species within that by nickname.
-    */
+     */
     public void printSortedAnimalByNickname() {
         //anonim
         listOfAnimal.stream()
