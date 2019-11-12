@@ -1,8 +1,8 @@
-package hu.neuron.zoo.zoo;
+package hu.neuron.zoo.model.zoo;
 
-import hu.neuron.zoo.animals.Animal;
-import hu.neuron.zoo.employee.*;
-import hu.neuron.zoo.enumsofzoo.Species;
+import hu.neuron.zoo.model.animals.Animal;
+import hu.neuron.zoo.model.employee.*;
+import hu.neuron.zoo.model.enumsofzoo.Species;
 import lombok.Getter;
 import lombok.Setter;
 

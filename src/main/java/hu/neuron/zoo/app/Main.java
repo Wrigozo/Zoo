@@ -1,11 +1,11 @@
-package hu.neuron.zoo;
+package hu.neuron.zoo.app;
 
-import hu.neuron.zoo.animals.Animal;
-import hu.neuron.zoo.employee.Director;
-import hu.neuron.zoo.employee.GondoZoo;
-import hu.neuron.zoo.enumsofzoo.Gender;
-import hu.neuron.zoo.enumsofzoo.Species;
-import hu.neuron.zoo.zoo.Zoo;
+import hu.neuron.zoo.model.animals.Animal;
+import hu.neuron.zoo.model.employee.Director;
+import hu.neuron.zoo.model.employee.GondoZoo;
+import hu.neuron.zoo.model.enumsofzoo.Gender;
+import hu.neuron.zoo.model.enumsofzoo.Species;
+import hu.neuron.zoo.model.zoo.Zoo;
 
 
 import java.time.LocalDate;
