@@ -13,22 +13,13 @@ import java.util.*;
 @Setter
 public class Zoo {
 
-    @Getter
-    private Director director;
-
-    private List<GondoZoo> listOfGondozo;
-
-    private List<Animal> listOfAnimal;
-
-    @Getter
-    private static int zooCounter = 0;
-
-
-    //	Lehetőséget ad az állatkert költözésére egy másik állatkertbe. (Beágyazott osztály segítségével.)
-
+    /*
+    *Lehetőséget ad az állatkert költözésére egy másik állatkertbe. (Beágyazott osztály segítségével.
+    */
     public static class Move {
 
         public static void moved(Zoo from, Zoo to) {
+
             for (GondoZoo key : from.listOfGondozo) {
                 to.employ(key);
             }
@@ -38,6 +29,7 @@ public class Zoo {
             if (to.director == null) {
                 to.employ(from.director);
             }
+
             from.fire();
 
             for (Animal a : from.listOfAnimal) {
@@ -45,12 +37,22 @@ public class Zoo {
             }
 
             from.listOfAnimal.clear();
-
         }
     }
 
-    public Zoo() {
+    @Getter
+    private static int zooCounter = 0;
+
+    static {
+        howManyZoos();
     }
+
+    @Getter
+    private Director director;
+
+    private List<GondoZoo> listOfGondozo;
+
+    private List<Animal> listOfAnimal;
 
     {
         listOfGondozo = new LinkedList<GondoZoo>();
@@ -64,9 +66,7 @@ public class Zoo {
         emptyZoo();
     }
 
-    static {
-
-        howManyZoos();
+    public Zoo() {
     }
 
     public static void howManyZoos() {
@@ -79,12 +79,10 @@ public class Zoo {
         System.out.println("Az állatkert megalapulása: " + LocalDate.now() + ".");
     }
 
-    private static void emptyZoo() {
+    private void emptyZoo() {
 
         System.out.println("Az állatkert sajnos még üres!");
     }
-
-    //employ
 
     public void employ(Director d) {
 
@@ -98,7 +96,6 @@ public class Zoo {
             System.out.println("Csak egy igazgató lehet!");
     }
 
-
     public void employ(GondoZoo g) {
 
         if (!listOfGondozo.contains(g)) {
@@ -109,9 +106,6 @@ public class Zoo {
             System.out.println("Ez a gondozó már létezik!");
         }
     }
-
-
-    //fire
 
     public void fire() {
 
@@ -149,9 +143,6 @@ public class Zoo {
         }
     }
 
-
-    //list
-
     public void printEmployees() {
 
         printDirector();
@@ -164,8 +155,8 @@ public class Zoo {
             printGondoZoos();
     }
 
-
     public void printDirector() {
+
         if (director == null) {
 
             System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
@@ -173,7 +164,6 @@ public class Zoo {
 
             System.out.println("Az igazgató: " + director.getName());
     }
-
 
     public void printGondoZoos() {
 
@@ -185,9 +175,6 @@ public class Zoo {
             }
         }
     }
-
-
-    //animal management
 
     public void addAnimal(Animal a) {
         //hibás nemírja ki létrehozáskor hogy szüksége van ilyen meg olyan dolgozóra
@@ -201,9 +188,7 @@ public class Zoo {
                 System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", a.getSpecies());
             }
         }
-
     }
-
 
     public void removeAnimal(Animal a) {
 
@@ -214,7 +199,6 @@ public class Zoo {
             }
         }
     }
-
 
     public void printAnimals() {
 
@@ -230,7 +214,6 @@ public class Zoo {
         }
     }
 
-
     public void printHowManyAnimal() {
 
         System.out.println("Az állatkertnek " + listOfAnimal.size() + " lakója van jelenleg!");
@@ -238,13 +221,12 @@ public class Zoo {
 
     /*
      * Sorts the animal by species within that by nickname.
-     */
+    */
     public void printSortedAnimalByNickname() {
         //anonim
         listOfAnimal.stream()
                 .sorted(Comparator.comparing(Animal::getSpecies).thenComparing(Animal::getNickName))
                 .map(s -> s.getNickName())
                 .forEach(System.out::println);
-
     }
 }
