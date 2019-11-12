@@ -1,0 +1,8 @@
+.idea/
+target/
+nb-configuration.xml
+nbactions.xml
+*.iml
+classes/
+*.sql
+output/
