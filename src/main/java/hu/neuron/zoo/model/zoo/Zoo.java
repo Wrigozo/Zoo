@@ -6,12 +6,13 @@ import hu.neuron.zoo.model.enumsofzoo.Species;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
 @Getter
 @Setter
-public class Zoo {
+public class Zoo implements Serializable {
 
     /*
     *Lehetőséget ad az állatkert költözésére egy másik állatkertbe. (Beágyazott osztály segítségével.
