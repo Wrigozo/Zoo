@@ -90,7 +90,7 @@ public class Main {
         Animal juli=new Animal(Species.TIGER,"Juli",LocalDate.of(1,1,1),Gender.FEMALE);
         secondZoo.addAnimal(juli);
         secondZoo.printAnimals();
-        GondoZoo andris=new GondoZoo("andris", "bhe", LocalDate.of(2000,1,1), Gender.MALE, Arrays.asList(Species.TIGER));
+        GondoZoo andris=new GondoZoo("andris", "berki", LocalDate.of(2000,1,1), Gender.MALE, Arrays.asList(Species.TIGER));
         secondZoo.employ(andris);
         secondZoo.addAnimal(juli);
 

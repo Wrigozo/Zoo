@@ -32,6 +32,7 @@ public class GondoZoo extends Employee {
     }
 
     public void printCaredAnimals(){
+
         for (Species s: caredSpecies){
             System.out.println(s+" ");
         }
@@ -53,6 +54,7 @@ public class GondoZoo extends Employee {
         return  lastName.equals(g.lastName) &&
                 firstName.equals(g.firstName) &&
                 birthDate.equals(g.birthDate) &&
-                gender.toString().equals(g.gender.toString());
+                gender.toString().equals(g.gender.toString()) &&
+                caredSpecies.equals(g.caredSpecies);
     }
 }
