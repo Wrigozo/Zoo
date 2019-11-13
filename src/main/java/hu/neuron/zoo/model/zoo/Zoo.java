@@ -123,14 +123,12 @@ public class Zoo implements Serializable {
 
         if (listOfGondozo == null) {
             System.out.print("Nincs dolgozó!");
-        }
-        else {
+        } else {
             listOfGondozo.remove(gondoZoo);
 
             if (listOfGondozo.contains(gondoZoo)) {
                 System.out.println("Nem sikerült a gondozót kirúgni!");
-            }
-            else {
+            } else {
                 if (existSpeciesOfAnimalThatGondozooCared(gondoZoo)) {
 
                     for (GondoZoo g : listOfGondozo) {
@@ -183,8 +181,7 @@ public class Zoo implements Serializable {
 
         if (isContainsSpecies(a)) {
             listOfAnimal.add(a);
-        }
-        else{
+        } else {
             System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", a.getSpecies());
         }
     }
@@ -228,24 +225,26 @@ public class Zoo implements Serializable {
                 .map(s -> s.getNickName())
                 .forEach(System.out::println);
     }
-    private  boolean existSpeciesOfAnimalThatGondozooCared(GondoZoo gondoZoo){
 
-        for(Animal a:listOfAnimal){
+    private boolean existSpeciesOfAnimalThatGondozooCared(GondoZoo gondoZoo) {
 
-            if(gondoZoo.getCaredSpecies().contains(a.getSpecies())){
+        for (Animal a : listOfAnimal) {
+
+            if (gondoZoo.getCaredSpecies().contains(a.getSpecies())) {
                 return true;
             }
         }
         return false;
     }
-    private boolean isContainsSpecies(Animal a){
+
+    private boolean isContainsSpecies(Animal a) {
 
         for (GondoZoo g : listOfGondozo) {
 
             if (g.getCaredSpecies().contains(a.getSpecies())) {
-                return  true;
+                return true;
             }
         }
-        return  false;
+        return false;
     }
 }

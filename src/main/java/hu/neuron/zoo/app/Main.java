@@ -10,10 +10,9 @@ import hu.neuron.zoo.model.zoo.Zoo;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.LinkedList;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)  {
         //a
         System.out.print("a ");
         Zoo firstZoo=new Zoo();
