@@ -45,7 +45,7 @@ public class Zoo implements Serializable {
     private static int zooCounter = 0;
 
     static {
-        howManyZoos();
+        printHowManyZoos();
     }
 
     @Getter
@@ -62,25 +62,25 @@ public class Zoo implements Serializable {
 
         zooCounter++;
 
-        foundedZoo();
+        printFoundedZoo();
 
-        emptyZoo();
+        printEmptyZoo();
     }
 
     public Zoo() {
     }
 
-    public static void howManyZoos() {
+    public static void printHowManyZoos() {
 
         System.out.println("Az országnak " + zooCounter + " állatkertje van jelenleg!");
     }
 
-    private void foundedZoo() {
+    private void printFoundedZoo() {
 
         System.out.println("Az állatkert megalapulása: " + LocalDate.now() + ".");
     }
 
-    private void emptyZoo() {
+    private void printEmptyZoo() {
 
         System.out.println("Az állatkert sajnos még üres!");
     }
@@ -113,33 +113,35 @@ public class Zoo implements Serializable {
         if (director == null) {
             System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
         } else {
+
             System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
             director = null;
         }
     }
 
-    //befejezetlen
-    //először megnézi, hogy van e olyan állat, amit a Gondozó gondozott, ha van akkor megnézi van e olyan gondozó aki el
-    // tudja látni, ha nincs akkor kiírja hogy szüksége van ilyen állatfajtagondozóra
-    public void fire(GondoZoo g) {
+    public void fire(GondoZoo gondoZoo) {
 
         if (listOfGondozo == null) {
             System.out.print("Nincs dolgozó!");
         }
+        else {
+            listOfGondozo.remove(gondoZoo);
 
-        for (GondoZoo key : listOfGondozo) {
+            if (listOfGondozo.contains(gondoZoo)) {
+                System.out.println("Nem sikerült a gondozót kirúgni!");
+            }
+            else {
+                if (existSpeciesOfAnimalThatGondozooCared(gondoZoo)) {
 
-            if (key.equals(g)) {
+                    for (GondoZoo g : listOfGondozo) {
+                        for (Species sg : gondoZoo.getCaredSpecies()) {
 
-                List<Species> s = key.getCaredSpecies();
-
-                listOfGondozo.remove(key);
-
-                for (Species spec : s) {
-
+                            if (!g.getCaredSpecies().contains(sg)) {
+                                System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", sg);
+                            }
+                        }
+                    }
                 }
-
-                return;
             }
         }
     }
@@ -178,16 +180,12 @@ public class Zoo implements Serializable {
     }
 
     public void addAnimal(Animal a) {
-        //hibás nemírja ki létrehozáskor hogy szüksége van ilyen meg olyan dolgozóra
-        for (GondoZoo g : listOfGondozo) {
 
-            List<Species> caredSpecies = g.getCaredSpecies();
-
-            if (caredSpecies.contains(a.getSpecies())) {
-                listOfAnimal.add(a);
-            } else {
-                System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", a.getSpecies());
-            }
+        if (isContainsSpecies(a)) {
+            listOfAnimal.add(a);
+        }
+        else{
+            System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", a.getSpecies());
         }
     }
 
@@ -229,5 +227,25 @@ public class Zoo implements Serializable {
                 .sorted(Comparator.comparing(Animal::getSpecies).thenComparing(Animal::getNickName))
                 .map(s -> s.getNickName())
                 .forEach(System.out::println);
+    }
+    private  boolean existSpeciesOfAnimalThatGondozooCared(GondoZoo gondoZoo){
+
+        for(Animal a:listOfAnimal){
+
+            if(gondoZoo.getCaredSpecies().contains(a.getSpecies())){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean isContainsSpecies(Animal a){
+
+        for (GondoZoo g : listOfGondozo) {
+
+            if (g.getCaredSpecies().contains(a.getSpecies())) {
+                return  true;
+            }
+        }
+        return  false;
     }
 }

@@ -19,27 +19,27 @@ public class Main {
         Zoo firstZoo=new Zoo();
         //b
         System.out.print("b ");
-        Director erik=new Director("Erik", "Hidi", LocalDate.of(2000,7,25), Gender.MAlE);
+        Director erik=new Director("Erik", "Hidi", LocalDate.of(2000,7,25), Gender.MALE);
         firstZoo.employ(erik);
 
         //c
         System.out.print("c ");
-        Animal sanyi=new Animal(Species.GIRAFFE, "Sándor",LocalDate.of(1998,7,23),Gender.MAlE);
+        Animal sanyi=new Animal(Species.GIRAFFE, "Sándor",LocalDate.of(1998,7,23),Gender.MALE);
         firstZoo.addAnimal(sanyi);
         //d
         System.out.print("d ");
-        GondoZoo feco=new GondoZoo("Fecó", "Szabó", LocalDate.of(1997, 12,4), Gender.MAlE, Arrays.asList(Species.GIRAFFE));
+        GondoZoo feco=new GondoZoo("Fecó", "Szabó", LocalDate.of(1997, 12,4), Gender.MALE, Arrays.asList(Species.GIRAFFE));
         firstZoo.employ(feco);
         //e
         System.out.print("e ");
         firstZoo.addAnimal(sanyi);
         //f
         System.out.print("f ");
-        Director roland=new Director("Roland", "Kállai", LocalDate.of(1998,7,23), Gender.MAlE);
+        Director roland=new Director("Roland", "Kállai", LocalDate.of(1998,7,23), Gender.MALE);
         firstZoo.employ(roland);
         //g
-        System.out.println("g");
-        GondoZoo robi=new GondoZoo("Róbert", "Dékány", LocalDate.of(1997,11,20), Gender.MAlE, Arrays.asList(Species.DOLPHIN));
+        System.out.println("g ");
+        GondoZoo robi=new GondoZoo("Róbert", "Dékány", LocalDate.of(1997,11,20), Gender.MALE, Arrays.asList(Species.DOLPHIN));
         firstZoo.employ(robi);
         //h
         System.out.print("h ");
@@ -56,7 +56,7 @@ public class Main {
         Zoo secondZoo=new Zoo();
         //l
         System.out.print("l ");
-        Zoo.howManyZoos();
+        Zoo.printHowManyZoos();
         //m
         System.out.print("m ");
         Zoo.Move.moved(firstZoo,secondZoo);
@@ -73,25 +73,32 @@ public class Main {
         secondZoo.fire();
         //q
         System.out.print("q ");
-        secondZoo.fire(new GondoZoo("Fecó", "Szabó", LocalDate.of(1997, 12,4), Gender.MAlE, new LinkedList()));
+        secondZoo.fire(feco);
         //r
         System.out.print("r ");
-        secondZoo.removeAnimal(new Animal(Species.GIRAFFE, "Róland",LocalDate.of(1998,7,23),Gender.MAlE));
+        secondZoo.removeAnimal(sanyi);
         //s
         System.out.print("s ");
-        secondZoo.removeAnimal(new Animal(Species.DOLPHIN, "Zsuzsi",LocalDate.of(1998,7,23),Gender.FEMALE));
+        secondZoo.removeAnimal(zsuzsi);
         //t
         System.out.print("t ");
-        secondZoo.fire(new GondoZoo("Róbert", "Dékány", LocalDate.of(1997,11,20), Gender.MAlE, new LinkedList()));
+        secondZoo.fire(robi);
         //u
         System.out.print("u ");
         secondZoo.printAnimals();
         secondZoo.printEmployees();
-        firstZoo.printGondoZoos();
 
-        System.out.println("HIBA");
-        secondZoo.employ(new GondoZoo("zslt", "bhe", LocalDate.of(2000,1,1), Gender.MAlE, new LinkedList()));
-        secondZoo.fire(new GondoZoo("zslt", "bhe", LocalDate.of(2000,1,1), Gender.MAlE, new LinkedList()));
+        Animal juli=new Animal(Species.TIGER,"Juli",LocalDate.of(1,1,1),Gender.FEMALE);
+        secondZoo.addAnimal(juli);
+        secondZoo.printAnimals();
+        GondoZoo andris=new GondoZoo("andris", "bhe", LocalDate.of(2000,1,1), Gender.MALE, Arrays.asList(Species.TIGER));
+        secondZoo.employ(andris);
+        secondZoo.addAnimal(juli);
+
+        secondZoo.printAnimals();
+        secondZoo.printEmployees();
+        secondZoo.fire(andris);
+        secondZoo.printEmployees();
 
     }
 
