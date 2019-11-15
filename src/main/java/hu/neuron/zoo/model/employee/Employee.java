@@ -24,11 +24,28 @@ public abstract class Employee implements Serializable {
 
     protected Gender gender;
 
-    public static Map<Employee, Map> storedWorks =new HashMap<Employee, Map>();
+    public static Map<Employee, Map> storedWorks = new HashMap<Employee, Map>();
+
+    public Employee(){
+
+    }
+
+    public Employee(String lName, String fName, LocalDate bDate, Gender g) {
+
+        lastName = lName;
+
+        firstName = fName;
+
+        birthDate = bDate;
+
+        gender = g;
+
+    }
 
 
     /**
      * Gives the whole name of the Employee.
+     *
      * @return a {@code String} value equals to the concatenation of the firstname and lastname.
      */
     public String getName() {

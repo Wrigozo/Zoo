@@ -21,16 +21,18 @@ public class Zoo implements Serializable {
 
         /**
          * Moves the first object to the second object.
+         *
          * @param from {@code Zoo} object, that will be moved
-         * @param to {@code Zoo} object, where {@code from} will be moved
+         * @param to   {@code Zoo} object, where {@code from} will be moved
          */
         public static void moved(Zoo from, Zoo to) {
 
-            for (GondoZoo key : from.listOfGondozo) {
+            for (GondoZoo key : from.listOfGondoZoos) {
+                key.setHaveJob(false);
                 to.employ(key);
             }
 
-            from.listOfGondozo.clear();
+            from.listOfGondoZoos.clear();
 
             if (to.director == null) {
                 to.employ(from.director);
@@ -38,11 +40,11 @@ public class Zoo implements Serializable {
 
             from.fire();
 
-            for (Animal a : from.listOfAnimal) {
+            for (Animal a : from.listOfAnimals) {
                 to.addAnimal(a);
             }
 
-            from.listOfAnimal.clear();
+            from.listOfAnimals.clear();
         }
     }
 
@@ -54,14 +56,18 @@ public class Zoo implements Serializable {
 
     private Director director;
 
-    private List<GondoZoo> listOfGondozo;
+    private List<GondoZoo> listOfGondoZoos;
 
-    private List<Animal> listOfAnimal;
+    private List<Swabber> listOfSwabbers;
+
+    private List<Animal> listOfAnimals;
 
     {
-        listOfGondozo = new LinkedList<GondoZoo>();
+        listOfGondoZoos = new LinkedList<GondoZoo>();
 
-        listOfAnimal = new LinkedList<Animal>();
+        listOfSwabbers = new LinkedList<Swabber>();
+
+        listOfAnimals = new LinkedList<Animal>();
 
         zooCounter++;
 
@@ -71,6 +77,132 @@ public class Zoo implements Serializable {
     }
 
     public Zoo() {
+    }
+
+    public void employ(Director d) {
+
+        if (director == null) {
+
+            director = d;
+
+            System.out.println("Az állatkert igazgatója " + director.getName() + " lett!");
+
+        } else
+            System.out.println("Csak egy igazgató lehet!");
+    }
+
+    public void employ(GondoZoo g) {
+        if (!g.isHaveJob()) {
+            if (!listOfGondoZoos.contains(g)) {
+
+                listOfGondoZoos.add(g);
+                g.setHaveJob(true);
+
+            } else {
+
+                System.out.println("Ez a gondozó már itt dolgozik!");
+            }
+        } else {
+            System.out.println(g.getName() + " már munkavállaló máshol, sajnos nem alkalmazhatjuk. :(");
+        }
+    }
+
+    public void employ(Swabber s) {
+        if (s.isHaveJob() == false) {
+            if (!listOfSwabbers.contains(s)) {
+
+                listOfSwabbers.add(s);
+                s.setHaveJob(true);
+
+            } else {
+
+                System.out.println("Ez a takarító már itt dolgozik!");
+            }
+        } else {
+            System.out.println(s.getName() + " már munkavállaló máshol, sajnos nem alkalmazhatjuk. :(");
+        }
+
+    }
+
+    public void fire() {
+
+        if (director == null) {
+            System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
+        } else {
+
+            System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
+            director = null;
+        }
+    }
+
+    public void fire(GondoZoo g) {
+
+        if (listOfGondoZoos == null) {
+            System.out.print("Nincs dolgozó!");
+        } else {
+
+            listOfGondoZoos.remove(g);
+
+            if (listOfGondoZoos.contains(g)) {
+                System.out.println("Nem sikerült a gondozót kirúgni!");
+
+            } else {
+                g.setHaveJob(false);
+
+                if (isSpeciesCaredBy(g)) {
+
+                    for (GondoZoo go : listOfGondoZoos) {
+                        for (Species sg : g.getListOfCaredSpecies()) {
+
+                            if (!go.getListOfCaredSpecies().contains(sg)) {
+                                System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", sg);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void fire(Swabber s) {
+
+        if (listOfSwabbers == null) {
+            System.out.print("Nincs dolgozó!");
+        } else {
+
+            listOfSwabbers.remove(s);
+
+            if (listOfSwabbers.contains(s)) {
+                System.out.println("Nem sikerült a takarítót kirúgni!");
+
+            } else {
+                s.setHaveJob(false);
+            }
+        }
+    }
+
+    public void addAnimal(Animal a) {
+
+        if (isContainsSpecies(a)) {
+            listOfAnimals.add(a);
+        } else {
+            System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", a.getSpecies());
+        }
+    }
+
+    public void removeAnimal(Animal a) {
+
+        for (Animal an : listOfAnimals) {
+
+            if (an.equals(a)) {
+                listOfAnimals.remove(an);
+            }
+        }
+    }
+
+    public void printHowManyAnimal() {
+
+        System.out.println("Az állatkertnek " + listOfAnimals.size() + " lakója van jelenleg!");
     }
 
     public static void printHowManyZoos() {
@@ -88,77 +220,16 @@ public class Zoo implements Serializable {
         System.out.println("Az állatkert sajnos még üres!");
     }
 
-    public void printStoredWorks(){
-        for(Employee k:Employee.storedWorks.keySet()){
-            System.out.println("A dolgozó: "+k.getName()+" és az elvégzett munka: ");
-            for(Object d:Employee.storedWorks.get(k).keySet()){
-                System.out.println("\t\t idő:"+d+" feladat: "+Employee.storedWorks.get(k).get(d));
+    public void printStoredWorks() {
+        for (Employee k : Employee.storedWorks.keySet()) {
+            System.out.println("A dolgozó: " + k.getName() + " és az elvégzett munka: ");
+            for (Object d : Employee.storedWorks.get(k).keySet()) {
+                System.out.println("\t\t idő:" + d + " feladat: " + Employee.storedWorks.get(k).get(d));
             }
-            if(k.getClass().getSimpleName().toString().equals("GondoZoo")){
+            if (k.getClass().getSimpleName().toString().equals("GondoZoo")) {
                 System.out.println(" gondozása.");
-            }
-            else{
-                System.out.println("takarítása.");
-            }
-        }
-    }
-
-    public void employ(Director d) {
-
-        if (director == null) {
-
-            director = d;
-
-            System.out.println("Az állatkert igazgatója " + director.getName() + " lett!");
-
-        } else
-            System.out.println("Csak egy igazgató lehet!");
-    }
-
-    public void employ(GondoZoo g) {
-
-        if (!listOfGondozo.contains(g)) {
-
-            listOfGondozo.add(g);
-        } else {
-
-            System.out.println("Ez a gondozó már létezik!");
-        }
-    }
-
-    public void fire() {
-
-        if (director == null) {
-            System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
-        } else {
-
-            System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
-            director = null;
-        }
-    }
-
-    public void fire(GondoZoo gondoZoo) {
-
-        if (listOfGondozo == null) {
-            System.out.print("Nincs dolgozó!");
-        } else {
-            listOfGondozo.remove(gondoZoo);
-
-            if (listOfGondozo.contains(gondoZoo)) {
-                System.out.println("Nem sikerült a gondozót kirúgni!");
             } else {
-
-                if (isSpeciesCaredBy(gondoZoo)) {
-
-                    for (GondoZoo g : listOfGondozo) {
-                        for (Species sg : gondoZoo.getListOfCaredSpecies()) {
-
-                            if (!g.getListOfCaredSpecies().contains(sg)) {
-                                System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", sg);
-                            }
-                        }
-                    }
-                }
+                System.out.println("takarítása.");
             }
         }
     }
@@ -169,10 +240,16 @@ public class Zoo implements Serializable {
 
         System.out.println("és a dolgozók: ");
 
-        if (listOfGondozo == null) {
+        if (listOfGondoZoos == null) {
             System.out.print("Nincs dolgozó!");
         } else
             printGondoZoos();
+        System.out.println("és a takarítók: ");
+
+        if (listOfSwabbers == null) {
+            System.out.print("Nincs takarító!");
+        } else
+            printSwabbers();
     }
 
     public void printDirector() {
@@ -187,41 +264,33 @@ public class Zoo implements Serializable {
 
     public void printGondoZoos() {
 
-        if (listOfGondozo.isEmpty()) {
+        if (listOfGondoZoos.isEmpty()) {
             System.out.println("Nincs gondozó!");
         } else {
-            for (GondoZoo g : listOfGondozo) {
+            for (GondoZoo g : listOfGondoZoos) {
                 System.out.format("\tGondozó: %s, és a gondozott állat: %s%n", g.getName(), g.getListOfCaredSpecies());
             }
         }
     }
 
-    public void addAnimal(Animal a) {
+    public void printSwabbers() {
 
-        if (isContainsSpecies(a)) {
-            listOfAnimal.add(a);
+        if (listOfSwabbers.isEmpty()) {
+            System.out.println("Nincs takarító!");
         } else {
-            System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", a.getSpecies());
-        }
-    }
-
-    public void removeAnimal(Animal a) {
-
-        for (Animal an : listOfAnimal) {
-
-            if (an.equals(a)) {
-                listOfAnimal.remove(an);
+            for (Swabber s: listOfSwabbers) {
+                System.out.format("\tTakarító: %s, és a takarított hely: %s%n", s.getName(), s.getListOfCleanedPlaces());
             }
         }
     }
 
     public void printAnimals() {
 
-        if (listOfAnimal != null) {
+        if (listOfAnimals != null) {
 
             System.out.print("Az állatok: ");
 
-            for (Animal a : listOfAnimal) {
+            for (Animal a : listOfAnimals) {
                 System.out.print(a.getNickName() + " ");
             }
 
@@ -229,40 +298,38 @@ public class Zoo implements Serializable {
         }
     }
 
-    public void printHowManyAnimal() {
-
-        System.out.println("Az állatkertnek " + listOfAnimal.size() + " lakója van jelenleg!");
-    }
-
     /**
      * Sorts the animal by species within that by nickname.
      */
     public void printSortedAnimalByNickname() {
-        listOfAnimal.stream()
+        listOfAnimals.stream()
                 .sorted(Comparator.comparing(Animal::getSpecies).thenComparing(Animal::getNickName))
                 .map(s -> s.getNickName())
                 .forEach(System.out::println);
     }
 
+
     /**
-     *isSpeciesCaredBy
-     * @param gondoZoo
+     * isSpeciesCaredBy
+     *
+     * @param g
      * @return
      */
-    private boolean isSpeciesCaredBy(GondoZoo gondoZoo) {
+    private boolean isSpeciesCaredBy(GondoZoo g) {
 
-        for (Animal a : listOfAnimal) {
+        for (Animal a : listOfAnimals) {
 
-            if (gondoZoo.getListOfCaredSpecies().contains(a.getSpecies())) {
+            if (g.getListOfCaredSpecies().contains(a.getSpecies())) {
                 return true;
             }
         }
         return false;
     }
 
+
     private boolean isContainsSpecies(Animal a) {
 
-        for (GondoZoo g : listOfGondozo) {
+        for (GondoZoo g : listOfGondoZoos) {
 
             if (g.getListOfCaredSpecies().contains(a.getSpecies())) {
                 return true;

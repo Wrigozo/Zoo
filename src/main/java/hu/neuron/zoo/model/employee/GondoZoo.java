@@ -13,57 +13,55 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class GondoZoo extends Employee implements Work{
+public class GondoZoo extends Employee implements Work {
 
     /**
      * A {@code List}&lt;{@code Species}&gt; type object, reprezents the list of the species that cared by the {@link GondoZoo}.
      */
     private List<Species> listOfCaredSpecies = new LinkedList<>();
 
-    private  Map<LocalDate, Species> done=new HashMap<LocalDate, Species>();
+    private Map<LocalDate, Species> done = new HashMap<LocalDate, Species>();
 
-    private GondoZoo(){
+    private boolean isHaveJob;
 
+    private GondoZoo() {
     }
 
-    public GondoZoo(String lName, String fName, LocalDate bDate, Gender g, List c) {
-        lastName = lName;
+    public GondoZoo(String lName, String fName, LocalDate bDate, Gender g) {
 
-        firstName = fName;
-
-        birthDate = bDate;
-
-        gender = g;
-
-        listOfCaredSpecies = c;
+        super(lName,fName,bDate,g);
     }
 
     /**
      * Adds the given object to the {@code List}&lt;{@link Species}&gt; caredSpecies.
+     *
      * @param spec a {@code Species} type of object, that will be added to {@code List}&lt;{@link Species}&gt; caredSpecies.
      */
-    public void addSpecies(Species spec) {
-        listOfCaredSpecies.add(spec);
+    public boolean addSpecies(Species spec) {
+        return listOfCaredSpecies.add(spec);
     }
 
-    public void printCaredAnimals(){
+    public void printCaredAnimals() {
 
-        for (Species s: listOfCaredSpecies){
-            System.out.println(s+" ");
+        for (Species s : listOfCaredSpecies) {
+            System.out.println(s + " ");
         }
     }
+
     @Override
     public void doWork(LocalDate endTimeOfTask, Enum e) {
-        try{
-            if(listOfCaredSpecies.contains(e)){
-                done.put(endTimeOfTask, (Species) e);
-                storedWorks.put(this, done);
+        try {
+            if (isHaveJob == true) {
+                if (listOfCaredSpecies.contains(e)) {
+                    done.put(endTimeOfTask, (Species) e);
+                    storedWorks.put(this, done);
+                } else {
+                    System.out.println("Ezt a fajtát nem gondozza " + getName());
+                }
+            } else {
+                System.out.println(getName() + " nem tud munkát végezni, ha nincs állása.");
             }
-            else{
-                System.out.println("Ezt a fajtát nem gondozza " + getName());
-            }
-        }
-        catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             System.out.println("Ez nem egy állat!");
         }
     }
@@ -81,7 +79,7 @@ public class GondoZoo extends Employee implements Work{
         }
         GondoZoo g = (GondoZoo) obj;
 
-        return  lastName.equals(g.lastName) &&
+        return lastName.equals(g.lastName) &&
                 firstName.equals(g.firstName) &&
                 birthDate.equals(g.birthDate) &&
                 gender.toString().equals(g.gender.toString()) &&

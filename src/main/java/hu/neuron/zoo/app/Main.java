@@ -14,37 +14,42 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         //a
         System.out.print("a ");
-        Zoo firstZoo=new Zoo();
+        Zoo firstZoo = new Zoo();
         //b
         System.out.print("b ");
-        Director erik=new Director("Erik", "Hidi", LocalDate.of(2000,7,25), Gender.MALE);
+        Director erik = new Director("Erik", "Hidi", LocalDate.of(2000, 7, 25), Gender.MALE);
         firstZoo.employ(erik);
 
         //c
         System.out.print("c ");
-        Animal sanyi=new Animal(Species.GIRAFFE, "Sándor",LocalDate.of(1998,7,23),Gender.MALE);
+        Animal sanyi = new Animal(Species.GIRAFFE, "Sándor", LocalDate.of(1998, 7, 23), Gender.MALE);
         firstZoo.addAnimal(sanyi);
         //d
         System.out.print("d ");
-        GondoZoo feco=new GondoZoo("Fecó", "Szabó", LocalDate.of(1997, 12,4), Gender.MALE, Arrays.asList(Species.GIRAFFE));
+        GondoZoo feco = new GondoZoo("Fecó", "Szabó", LocalDate.of(1997, 12, 4), Gender.MALE);
+        feco.addSpecies(Species.GIRAFFE);
         firstZoo.employ(feco);
         //e
         System.out.print("e ");
         firstZoo.addAnimal(sanyi);
         //f
         System.out.print("f ");
-        Director roland=new Director("Roland", "Kállai", LocalDate.of(1998,7,23), Gender.MALE);
+        Director roland = new Director("Roland", "Kállai", LocalDate.of(1998, 7, 23), Gender.MALE);
         firstZoo.employ(roland);
         //g
         System.out.println("g ");
-        GondoZoo robi=new GondoZoo("Róbert", "Dékány", LocalDate.of(1997,11,20), Gender.MALE, Arrays.asList(Species.DOLPHIN));
+        GondoZoo robi = new GondoZoo("Róbert", "Dékány", LocalDate.of(1997, 11, 20), Gender.MALE);
+        robi.addSpecies(Species.DOLPHIN);
+        robi.addSpecies(Species.MONKEY);
+        robi.doWork(LocalDate.of(2019, 11, 13), Species.MONKEY);
+        robi.addSpecies(Species.ZEBRA);
         firstZoo.employ(robi);
         //h
         System.out.print("h ");
-        Animal zsuzsi=new Animal(Species.DOLPHIN, "Zsuzsi",LocalDate.of(1998,7,23),Gender.FEMALE);
+        Animal zsuzsi = new Animal(Species.DOLPHIN, "Zsuzsi", LocalDate.of(1998, 7, 23), Gender.FEMALE);
         firstZoo.addAnimal(zsuzsi);
         //i
         System.out.println("Az állatkert állatai:");
@@ -54,13 +59,13 @@ public class Main {
         firstZoo.printSortedAnimalByNickname();
         //k
         System.out.print("k ");
-        Zoo secondZoo=new Zoo();
+        Zoo secondZoo = new Zoo();
         //l
         System.out.print("l ");
         Zoo.printHowManyZoos();
         //m
         System.out.print("m ");
-        Zoo.Move.moved(firstZoo,secondZoo);
+        Zoo.Move.moved(firstZoo, secondZoo);
         //n
         System.out.print("n ");
         firstZoo.printAnimals();
@@ -92,17 +97,24 @@ public class Main {
         System.out.println("\n2-es feladatsor:");
 
         robi.doWork(LocalDate.now(), Species.TIGER);
-        robi.doWork(LocalDate.now(),Species.DOLPHIN);
+        robi.doWork(LocalDate.now(), Species.DOLPHIN);
         robi.doWork((LocalDate.now()), Places.POOL);
-        feco.doWork(LocalDate.of(2019,1,1), Species.GIRAFFE);
-        Swabber peti=new Swabber("Péter", "Versényi",LocalDate.of(1,1,1), Gender.MALE, Arrays.asList(Places.TERRARIUM));
-        peti.doWork(LocalDate.of(2,2,2),Places.CAGE);
-        peti.doWork(LocalDate.now(),Places.TERRARIUM);
+        robi.doWork(LocalDate.of(2019, 11, 12), Species.MONKEY);
+        feco.doWork(LocalDate.of(2019, 1, 1), Species.GIRAFFE);
+        Swabber peti = new Swabber("Péter", "Versényi", LocalDate.of(1, 1, 1), Gender.MALE);
+        peti.addPlaces(Places.TERRARIUM);
+        peti.doWork(LocalDate.of(2, 2, 2), Places.CAGE);
+        secondZoo.employ(peti);
+        peti.doWork(LocalDate.now(), Places.TERRARIUM);
         secondZoo.printStoredWorks();
+        secondZoo.addAnimal(sanyi);
+        secondZoo.printEmployees();
+        secondZoo.printHowManyAnimal();
         System.out.println("firstzoo");
-        Animal juli=new Animal(Species.TIGER,"Juli",LocalDate.of(1,1,1),Gender.FEMALE);
+        Animal juli = new Animal(Species.TIGER, "Juli", LocalDate.of(1, 1, 1), Gender.FEMALE);
         firstZoo.addAnimal(juli);
-        GondoZoo andris=new GondoZoo("andris", "berki", LocalDate.of(2000,1,1), Gender.MALE, Arrays.asList(Species.TIGER));
+        GondoZoo andris = new GondoZoo("andris", "berki", LocalDate.of(2000, 1, 1), Gender.MALE);
+        andris.addSpecies(Species.TIGER);
         firstZoo.employ(andris);
         firstZoo.addAnimal(juli);
         firstZoo.employ(robi);
@@ -110,7 +122,8 @@ public class Main {
         firstZoo.printEmployees();
 //        firstZoo.fire(andris);
 //        firstZoo.printEmployees();
-        robi.doWork(LocalDate.of(2019,11,14),Species.DOLPHIN);
+        robi.doWork(LocalDate.of(2019, 11, 14), Species.DOLPHIN);
+        System.out.println("secondzoo");
         secondZoo.printStoredWorks();
 
 
