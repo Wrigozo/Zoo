@@ -11,6 +11,7 @@ import java.time.LocalDate;
 public class Director extends Employee {
 
     public Director(String lName, String fName, LocalDate bDate, Gender g) {
+
         lastName = lName;
 
         firstName = fName;

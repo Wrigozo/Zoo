@@ -1,17 +1,48 @@
 package hu.neuron.zoo.model.employee;
 
+import hu.neuron.zoo.model.enumsofzoo.Gender;
 import hu.neuron.zoo.model.enumsofzoo.Places;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
-public class Swabber extends Employee{
+public class Swabber extends Employee implements Work{
 
+    /**
+     * A {@code List}&lt;{@code Places}&gt; type object, reprezents the list of the places that cleaned by the {@link Swabber}.
+     */
     private List<Places> cleanedPlaces=new LinkedList<Places>();
+
+    private Map<LocalDate, Places> done=new HashMap<LocalDate, Places>();
+
+    public Swabber(String lName, String fName, LocalDate bDate, Gender g, List c) {
+        lastName = lName;
+
+        firstName = fName;
+
+        birthDate = bDate;
+
+        gender = g;
+
+        cleanedPlaces = c;
+    }
+    @Override
+    public void doWork(LocalDate endTimeOfTask, Enum e) {
+        try{
+            done.put(endTimeOfTask, (Places) e);
+            storedWorks.put(this, done);
+        }
+        catch (IllegalArgumentException ex){
+            System.out.println("Ez nem egy takarítható hely!");
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -32,6 +63,4 @@ public class Swabber extends Employee{
                 gender.toString().equals(s.gender.toString()) &&
                 cleanedPlaces.equals(s.cleanedPlaces);
     }
-
-
 }

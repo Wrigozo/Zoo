@@ -3,7 +3,9 @@ package hu.neuron.zoo.app;
 import hu.neuron.zoo.model.animals.Animal;
 import hu.neuron.zoo.model.employee.Director;
 import hu.neuron.zoo.model.employee.GondoZoo;
+import hu.neuron.zoo.model.employee.Swabber;
 import hu.neuron.zoo.model.enumsofzoo.Gender;
+import hu.neuron.zoo.model.enumsofzoo.Places;
 import hu.neuron.zoo.model.enumsofzoo.Species;
 import hu.neuron.zoo.model.zoo.Zoo;
 
@@ -72,7 +74,7 @@ public class Main {
         secondZoo.fire();
         //q
         System.out.print("q ");
-        secondZoo.fire(feco);
+        //secondZoo.fire(feco);
         //r
         System.out.print("r ");
         secondZoo.removeAnimal(sanyi);
@@ -81,12 +83,20 @@ public class Main {
         secondZoo.removeAnimal(zsuzsi);
         //t
         System.out.print("t ");
-        secondZoo.fire(robi);
+        //secondZoo.fire(robi);
         //u
         System.out.print("u ");
         secondZoo.printAnimals();
         secondZoo.printEmployees();
 
+        System.out.println("\n2-es feladatsor:");
+
+        robi.doWork(LocalDate.now(), Species.TIGER);
+        robi.doWork(LocalDate.of(2017,1,1),Species.DOLPHIN);
+        feco.doWork(LocalDate.of(2019,1,1), Species.GIRAFFE);
+        Swabber peti=new Swabber("Péter", "Versényi",LocalDate.of(1,1,1), Gender.MALE, Arrays.asList(Places.TERRARIUM));
+        peti.doWork(LocalDate.of(2,2,2),Places.CAGE);
+        secondZoo.printStoredWorks();
         Animal juli=new Animal(Species.TIGER,"Juli",LocalDate.of(1,1,1),Gender.FEMALE);
         secondZoo.addAnimal(juli);
         secondZoo.printAnimals();

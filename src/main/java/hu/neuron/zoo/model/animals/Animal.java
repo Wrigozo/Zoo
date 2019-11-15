@@ -10,7 +10,11 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+/**
+ * Reprezents an animal.
+ */
 public class Animal implements Serializable {
+
     private Species species;
 
     private String nickName;
@@ -23,6 +27,7 @@ public class Animal implements Serializable {
     }
 
     public Animal(Species s, String nName, LocalDate bDate, Gender g) {
+
         species = s;
 
         nickName = nName;

@@ -6,14 +6,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
-public class GondoZoo extends Employee {
+public class GondoZoo extends Employee implements Work{
 
-    private List<Species> caredSpecies = new LinkedList<>();
+    /**
+     * A {@code List}&lt;{@code Species}&gt; type object, reprezents the list of the species that cared by the {@link GondoZoo}.
+     */
+    private List<Species> listOfCaredSpecies = new LinkedList<>();
+
+    private  Map<LocalDate, Species> done=new HashMap<LocalDate, Species>();
 
     public GondoZoo(String lName, String fName, LocalDate bDate, Gender g, List c) {
         lastName = lName;
@@ -24,17 +31,31 @@ public class GondoZoo extends Employee {
 
         gender = g;
 
-        caredSpecies = c;
+        listOfCaredSpecies = c;
     }
 
+    /**
+     * Adds the given object to the {@code List}&lt;{@link Species}&gt; caredSpecies.
+     * @param spec a {@code Species} type of object, that will be added to {@code List}&lt;{@link Species}&gt; caredSpecies.
+     */
     public void addSpecies(Species spec) {
-        caredSpecies.add(spec);
+        listOfCaredSpecies.add(spec);
     }
 
     public void printCaredAnimals(){
 
-        for (Species s: caredSpecies){
+        for (Species s: listOfCaredSpecies){
             System.out.println(s+" ");
+        }
+    }
+    @Override
+    public void doWork(LocalDate endTimeOfTask, Enum e) {
+        try{
+            done.put(endTimeOfTask, (Species) e);
+            storedWorks.put(this, done);
+        }
+        catch (IllegalArgumentException ex){
+            System.out.println("Ez nem egy állat!");
         }
     }
 
@@ -55,6 +76,6 @@ public class GondoZoo extends Employee {
                 firstName.equals(g.firstName) &&
                 birthDate.equals(g.birthDate) &&
                 gender.toString().equals(g.gender.toString()) &&
-                caredSpecies.equals(g.caredSpecies);
+                listOfCaredSpecies.equals(g.listOfCaredSpecies);
     }
 }

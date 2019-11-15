@@ -6,6 +6,10 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 @Getter
@@ -20,7 +24,13 @@ public abstract class Employee implements Serializable {
 
     protected Gender gender;
 
+    public static Map<Employee, Map> storedWorks =new HashMap<Employee, Map>();
 
+
+    /**
+     * Gives the whole name of the Employee.
+     * @return a {@code String} value equals to the concatenation of the firstname and lastname.
+     */
     public String getName() {
         return firstName + " " + lastName;
     }
