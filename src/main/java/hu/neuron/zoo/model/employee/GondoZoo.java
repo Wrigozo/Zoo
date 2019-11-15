@@ -22,6 +22,10 @@ public class GondoZoo extends Employee implements Work{
 
     private  Map<LocalDate, Species> done=new HashMap<LocalDate, Species>();
 
+    private GondoZoo(){
+
+    }
+
     public GondoZoo(String lName, String fName, LocalDate bDate, Gender g, List c) {
         lastName = lName;
 
@@ -51,8 +55,13 @@ public class GondoZoo extends Employee implements Work{
     @Override
     public void doWork(LocalDate endTimeOfTask, Enum e) {
         try{
-            done.put(endTimeOfTask, (Species) e);
-            storedWorks.put(this, done);
+            if(listOfCaredSpecies.contains(e)){
+                done.put(endTimeOfTask, (Species) e);
+                storedWorks.put(this, done);
+            }
+            else{
+                System.out.println("Ezt a fajtát nem gondozza " + getName());
+            }
         }
         catch (IllegalArgumentException ex){
             System.out.println("Ez nem egy állat!");

@@ -22,6 +22,10 @@ public class Swabber extends Employee implements Work{
 
     private Map<LocalDate, Places> done=new HashMap<LocalDate, Places>();
 
+    private Swabber(){
+
+    }
+
     public Swabber(String lName, String fName, LocalDate bDate, Gender g, List c) {
         lastName = lName;
 
@@ -36,8 +40,14 @@ public class Swabber extends Employee implements Work{
     @Override
     public void doWork(LocalDate endTimeOfTask, Enum e) {
         try{
-            done.put(endTimeOfTask, (Places) e);
-            storedWorks.put(this, done);
+            if (cleanedPlaces.contains(e)) {
+                done.put(endTimeOfTask, (Places) e);
+                storedWorks.put(this, done);
+            }
+            else{
+                System.out.println("Ezt a helyet nem takarítja "+getName());
+            }
+
         }
         catch (IllegalArgumentException ex){
             System.out.println("Ez nem egy takarítható hely!");

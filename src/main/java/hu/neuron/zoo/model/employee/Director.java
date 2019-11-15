@@ -10,6 +10,10 @@ import java.time.LocalDate;
 @Getter
 public class Director extends Employee {
 
+    private Director(){
+
+    }
+
     public Director(String lName, String fName, LocalDate bDate, Gender g) {
 
         lastName = lName;

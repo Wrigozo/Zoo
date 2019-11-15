@@ -46,14 +46,12 @@ public class Zoo implements Serializable {
         }
     }
 
-    @Getter
     private static int zooCounter = 0;
 
     static {
         printHowManyZoos();
     }
 
-    @Getter
     private Director director;
 
     private List<GondoZoo> listOfGondozo;
@@ -89,6 +87,7 @@ public class Zoo implements Serializable {
 
         System.out.println("Az állatkert sajnos még üres!");
     }
+
     public void printStoredWorks(){
         for(Employee k:Employee.storedWorks.keySet()){
             System.out.println("A dolgozó: "+k.getName()+" és az elvégzett munka: ");
@@ -102,7 +101,6 @@ public class Zoo implements Serializable {
                 System.out.println("takarítása.");
             }
         }
-
     }
 
     public void employ(Director d) {
@@ -149,7 +147,8 @@ public class Zoo implements Serializable {
             if (listOfGondozo.contains(gondoZoo)) {
                 System.out.println("Nem sikerült a gondozót kirúgni!");
             } else {
-                if (existSpeciesOfAnimalThatGondozooCared(gondoZoo)) {
+
+                if (isSpeciesCaredBy(gondoZoo)) {
 
                     for (GondoZoo g : listOfGondozo) {
                         for (Species sg : gondoZoo.getListOfCaredSpecies()) {
@@ -246,11 +245,11 @@ public class Zoo implements Serializable {
     }
 
     /**
-     *
+     *isSpeciesCaredBy
      * @param gondoZoo
      * @return
      */
-    private boolean existSpeciesOfAnimalThatGondozooCared(GondoZoo gondoZoo) {
+    private boolean isSpeciesCaredBy(GondoZoo gondoZoo) {
 
         for (Animal a : listOfAnimal) {
 

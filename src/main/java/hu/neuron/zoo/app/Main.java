@@ -92,22 +92,27 @@ public class Main {
         System.out.println("\n2-es feladatsor:");
 
         robi.doWork(LocalDate.now(), Species.TIGER);
-        robi.doWork(LocalDate.of(2017,1,1),Species.DOLPHIN);
+        robi.doWork(LocalDate.now(),Species.DOLPHIN);
+        robi.doWork((LocalDate.now()), Places.POOL);
         feco.doWork(LocalDate.of(2019,1,1), Species.GIRAFFE);
         Swabber peti=new Swabber("Péter", "Versényi",LocalDate.of(1,1,1), Gender.MALE, Arrays.asList(Places.TERRARIUM));
         peti.doWork(LocalDate.of(2,2,2),Places.CAGE);
+        peti.doWork(LocalDate.now(),Places.TERRARIUM);
         secondZoo.printStoredWorks();
+        System.out.println("firstzoo");
         Animal juli=new Animal(Species.TIGER,"Juli",LocalDate.of(1,1,1),Gender.FEMALE);
-        secondZoo.addAnimal(juli);
-        secondZoo.printAnimals();
+        firstZoo.addAnimal(juli);
         GondoZoo andris=new GondoZoo("andris", "berki", LocalDate.of(2000,1,1), Gender.MALE, Arrays.asList(Species.TIGER));
-        secondZoo.employ(andris);
-        secondZoo.addAnimal(juli);
+        firstZoo.employ(andris);
+        firstZoo.addAnimal(juli);
+        firstZoo.employ(robi);
+        firstZoo.printAnimals();
+        firstZoo.printEmployees();
+//        firstZoo.fire(andris);
+//        firstZoo.printEmployees();
+        robi.doWork(LocalDate.of(2019,11,14),Species.DOLPHIN);
+        secondZoo.printStoredWorks();
 
-        secondZoo.printAnimals();
-        secondZoo.printEmployees();
-        secondZoo.fire(andris);
-        secondZoo.printEmployees();
 
     }
 
