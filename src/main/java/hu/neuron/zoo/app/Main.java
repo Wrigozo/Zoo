@@ -126,6 +126,8 @@ public class Main {
         System.out.println("secondzoo");
         secondZoo.printStoredWorks();
 
+        //moving
+        //Zoo.Move.moved( secondZoo, firstZoo);
 
     }
 

@@ -27,7 +27,7 @@ public abstract class Employee implements Serializable {
     protected LocalDate startWorkingDate;
 
     /**
-     * Stores the employee, the the first workday, and the task in a map.
+     * Stores the {@code Employee}, the the first workday, and the task in a map.
      */
     public static Map<Employee, Map> storedWorks = new HashMap<Employee, Map>();
 
@@ -52,7 +52,7 @@ public abstract class Employee implements Serializable {
     /**
      * Gives the whole name of the Employee.
      *
-     * @return a {@code String} value equals to the concatenation of the firstname and lastname.
+     * @return a {@code String} value equals to the concatenation of the {@code #firstname} and {@code #lastname}.
      */
     public String getName() {
         return firstName + " " + lastName;

@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
+/**
+ * Represents a zoo.
+ */
 @Getter
 @Setter
 public class Zoo implements Serializable {
@@ -21,10 +24,10 @@ public class Zoo implements Serializable {
     public static class Move {
 
         /**
-         * Moves the first object to the second object.
+         * Moves the first {@code Zoo} to the second {@code Zoo}.
          *
          * @param from {@code Zoo} object, that will be moved
-         * @param to   {@code Zoo} object, where {@code from} will be moved
+         * @param to   {@code Zoo} object, where {@code #from} will be moved
          */
         public static void moved(Zoo from, Zoo to) {
 
@@ -89,7 +92,8 @@ public class Zoo implements Serializable {
 
     /**
      * Employs a director.
-     * @param d a {@code Direktor} object, who will be employed
+     *
+     * @param d  a {@code Direktor} object, who will be employed
      * @param da a {@code LocalDate} object, when the {@code Direktor} starts working
      */
     public void employ(Director d, LocalDate da) {
@@ -108,11 +112,11 @@ public class Zoo implements Serializable {
 
     /**
      * Employs a gondozoo.
-     * First, examines that the GondoZoo has a job or no. If he doesn't have it, then checks: is the list of GondoZoos
-     * contains GondoZoo or no. If he doesn't member of it, he haven't been employed yet, so employs him.
-     * After all, sets the first working date of the GondoZoo, and also he has a job. Finally, this also handles some error cases.
+     * First, examines that the {@code GondoZoo} has a job or no. If he doesn't have it, then checks: is the {@code #listOfGondoZoos}
+     * contains {@code GondoZoo} or no. If he doesn't member of it, he haven't been employed yet, so could employ him.
+     * After all, sets the first working date of the {@code GondoZoo}, and also he has a job now. Finally, this also handles some error cases.
      *
-     * @param g a {@code GondoZoo} object, who will be employed
+     * @param g  a {@code GondoZoo} object, who will be employed
      * @param da a {@code LocalDate} object, when the {@code GondoZoo} starts working
      */
     public void employ(GondoZoo g, LocalDate da) {
@@ -135,11 +139,11 @@ public class Zoo implements Serializable {
 
     /**
      * Employs a Swabber.
-     * First, examines that the Swabber has a job or no. If he doesn't have it, then checks: is the list of Swabbers
-     * contains GondoZoo or no. If he doesn't member of it, he haven't been employed yet, so employs him.
-     * After all, sets the first working date of the Swabber, and also he has a job. Finally, this also handles some error cases.
+     * First, examines that the {@code Swabber} has a job or no. If he doesn't have it, then checks: is the {@code #listOfSwabbers}
+     * contains {@code Swabber} or no. If he doesn't member of it, he haven't been employed yet, so could employ him.
+     * After all, sets the first working date of the {@code Swabber}, and also he has a job now. Finally, also handles some error cases.
      *
-     * @param s a {@code Swabber} object, who will be employed
+     * @param s  a {@code Swabber} object, who will be employed
      * @param da a {@code LocalDate} object, when the {@code Swabber} starts working
      */
     public void employ(Swabber s, LocalDate da) {
@@ -176,10 +180,10 @@ public class Zoo implements Serializable {
 
     /**
      * Fires the gondozo.
-     * First, examines that the list of the GondoZoo is null or no. If it is not null, tries to remove the GondoZoo.
-     * If it isn't possible, handles it. Else sets the GondoZoo doesn't have job, his first working date will be null.
-     * After all, examines that : are there any species of animal cared by the GondoZoo in the zoo. Finally, if it is true,
-     * the next question is: are there any gondozoo who will care these animals, if there are noone, these animals need cares.
+     * First, examines that the list of the {@code GondoZoo} is null or no. If it is not null, tries to remove the {@code GondoZoo}.
+     * If it isn't possible, handles it. Else sets the {@code GondoZoo} doesn't have job, his first working date will be null.
+     * After all, examines that : are there any species of animal cared by the {@code GondoZoo} in the zoo. Finally, if it is true,
+     * the next question is: are there any {@code GondoZoo} who will care these animals, if there are no-one, these animals need cares.
      *
      * @param g a {@code GondoZoo} object, who will be fired
      */
@@ -215,10 +219,11 @@ public class Zoo implements Serializable {
 
     /**
      * Fires the swabber.
-     * First, examines that the list of the Swabber is null or no. If not null, tries to remove this Swabber.
-     * After all, sets the Swabber doesn't have job, his first working date will be null. If the firing not successfull,
+     * First, examines that the list of the {@code Swabber} is null or no. If not null, tries to remove this {@code Swabber}.
+     * After all, sets the {@code Swabber} doesn't have job, his first working date will be null. If the firing not successfull,
      * handles it.
-     * @param s
+     *
+     * @param s a {@code Swabber} object, who will be fired
      */
     public void fire(Swabber s) {
 
@@ -239,27 +244,14 @@ public class Zoo implements Serializable {
     }
 
     /**
-     * Print the rewards of the GondoZoos and the Swabbers.
+     * Examines {@link #isCaredSpecies}, if it is true, then adds the animal to the {@code #listOfAnimals} of zoo. Else,
+     * the zoo need the species of the animal caring.
+     *
+     * @param a the {@code Animal}, whose species are examined
      */
-    public void printReward(){
-
-        for(GondoZoo g:listOfGondoZoos){
-             Period a=g.getStartWorkingDate().until(LocalDate.now());
-             if(a.getYears()>=5){
-                 g.printGivesReward();
-             }
-        }
-        for(Swabber s:listOfSwabbers){
-            Period a=s.getStartWorkingDate().until(LocalDate.now());
-            if(a.getYears()>=5){
-                s.printGivesReward();
-            }
-        }
-    }
-
     public void addAnimal(Animal a) {
 
-        if (isContainsSpecies(a)) {
+        if (isCaredSpecies(a)) {
             listOfAnimals.add(a);
         } else {
             System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", a.getSpecies());
@@ -276,11 +268,6 @@ public class Zoo implements Serializable {
         }
     }
 
-    public void printHowManyAnimal() {
-
-        System.out.println("Az állatkertnek " + listOfAnimals.size() + " lakója van jelenleg!");
-    }
-
     public static void printHowManyZoos() {
 
         System.out.println("Az országnak " + zooCounter + " állatkertje van jelenleg!");
@@ -294,27 +281,6 @@ public class Zoo implements Serializable {
     private void printEmptyZoo() {
 
         System.out.println("Az állatkert sajnos még üres!");
-    }
-
-    /**
-     * Prints the stored works of the zoo.
-     * First iterates among the storeWorks keys, and write to the console: the employee, and his
-     * works done. After that, the storeWorks values are truly maps. So iterates the values(maps), that stores
-     * the date, and the task done. Writes it to the console. Finally, examines that: was the employee gondoZoo or Swabber,
-     * and prints the right work of Employee.
-     */
-    public void printStoredWorks() {
-        for (Employee k : Employee.storedWorks.keySet()) {
-            System.out.println("A dolgozó: " + k.getName() + " és az elvégzett munka: ");
-            for (Object d : Employee.storedWorks.get(k).keySet()) {
-                System.out.println("\t\t idő:" + d + " feladat: " + Employee.storedWorks.get(k).get(d));
-            }
-            if (k.getClass().getSimpleName().toString().equals("GondoZoo")) {
-                System.out.println(" gondozása.");
-            } else {
-                System.out.println("takarítása.");
-            }
-        }
     }
 
     public void printEmployees() {
@@ -367,6 +333,51 @@ public class Zoo implements Serializable {
         }
     }
 
+    /**
+     * Prints the stored works of the zoo.
+     * First iterates among the storeWorks keys, and write to the console: the {@code Employee}, and his
+     * works done. After that, the storeWorks values are truly maps. So iterates the values(maps), that stores
+     * the date of th work, and the tasks done. Writes it to the console. Finally, examines that: is the {@code Employee} {@code GondoZoo} or {@code Swabber} type,
+     * and prints the appropriate work of {@code Employee}.
+     */
+    public void printStoredWorks() {
+        for (Employee k : Employee.storedWorks.keySet()) {
+            System.out.println("A dolgozó: " + k.getName() + " és az elvégzett munka: ");
+            for (Object d : Employee.storedWorks.get(k).keySet()) {
+                System.out.println("\t\t idő:" + d + " feladat: " + Employee.storedWorks.get(k).get(d));
+            }
+            if (k.getClass().getSimpleName().toString().equals("GondoZoo")) {
+                System.out.println(" gondozása.");
+            } else {
+                System.out.println("takarítása.");
+            }
+        }
+    }
+
+    /**
+     * Print the rewards of the gondoZoos and the swabbers.
+     */
+    public void printReward() {
+
+        for (GondoZoo g : listOfGondoZoos) {
+            Period a = g.getStartWorkingDate().until(LocalDate.now());
+            if (a.getYears() >= 5) {
+                g.printGivesReward();
+            }
+        }
+        for (Swabber s : listOfSwabbers) {
+            Period a = s.getStartWorkingDate().until(LocalDate.now());
+            if (a.getYears() >= 5) {
+                s.printGivesReward();
+            }
+        }
+    }
+
+    public void printHowManyAnimal() {
+
+        System.out.println("Az állatkertnek " + listOfAnimals.size() + " lakója van jelenleg!");
+    }
+
     public void printAnimals() {
 
         if (listOfAnimals != null) {
@@ -382,7 +393,7 @@ public class Zoo implements Serializable {
     }
 
     /**
-     * Sorts the animal by species within that by nickname.
+     * Sorts the {@code Animal} by species within that by nickname.
      */
     public void printSortedAnimalByNickname() {
         listOfAnimals.stream()
@@ -391,12 +402,11 @@ public class Zoo implements Serializable {
                 .forEach(System.out::println);
     }
 
-
     /**
-     * isSpeciesCaredBy
+     * Examines that : are there any species of animal cared by the {@code GondoZoo} in the zoo.
      *
-     * @param g
-     * @return
+     * @param g a {@code GondoZoo} type object whose cared animal will be examined
+     * @return if there are species of the animal of zoo, that also cares the  {@code GondoZoo}, returns true, else false
      */
     private boolean isSpeciesCaredBy(GondoZoo g) {
 
@@ -409,8 +419,13 @@ public class Zoo implements Serializable {
         return false;
     }
 
-
-    private boolean isContainsSpecies(Animal a) {
+    /**
+     * Examines that: are the species of the actual {@code Animal} cared in the zoo.
+     *
+     * @param a an {@code Animal} type object that species is examined
+     * @return true, if the species of the actual {@code Animal} cared in the Zoo
+     */
+    private boolean isCaredSpecies(Animal a) {
 
         for (GondoZoo g : listOfGondoZoos) {
 

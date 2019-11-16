@@ -16,7 +16,7 @@ import java.util.Map;
 public class GondoZoo extends Employee implements Work {
 
     /**
-     * A {@code List}&lt;{@code Species}&gt; type object, reprezents the list of the species that cared by the {@code GondoZoo}.
+     * A {@code List}&lt;{@code Species}&gt; type object, reprezents the list of the {@code Species} that cared by the {@code GondoZoo}.
      */
     private List<Species> listOfCaredSpecies = new LinkedList<>();
 
@@ -44,9 +44,9 @@ public class GondoZoo extends Employee implements Work {
     }
 
     /**
-     * Adds the given object to the {@code List}&lt;{@code Species}&gt; caredSpecies.
+     * Adds the given object to the {@code #caredSpecies}.
      *
-     * @param spec a {@code Species} type of object, that will be added to {@code List}&lt;{@code Species}&gt; caredSpecies.
+     * @param spec a {@code Species} type of object, that will be added to {@code List}&lt;{@code Species}&gt; {@code #caredSpecies}.
      */
     public boolean addSpecies(Species spec) {
         return listOfCaredSpecies.add(spec);

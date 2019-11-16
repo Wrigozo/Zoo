@@ -16,7 +16,7 @@ import java.util.Map;
 public class Swabber extends Employee implements Work {
 
     /**
-     * A {@code List}&lt;{@code Places}&gt; type object, reprezents the list of the places that cleaned by the {@code Swabber}.
+     * A {@code List}&lt;{@code Places}&gt; type object, reprezents the list of the {@code Places} that cleaned by the {@code Swabber}.
      */
     private List<Places> listOfCleanedPlaces = new LinkedList<Places>();
 
@@ -56,7 +56,7 @@ public class Swabber extends Employee implements Work {
      * Stores the work done.
      * First examines that the {@code Swabber} has job, then puts the params to the {@code doneWork}. After all puts the
      * {@code Swabber} and the {@code #doneWork} to {@code Employee#storedWorks}.
-     * It also handles some error cases
+     * It also handles some error cases.
      *
      * @param endTimeOfTask {@code LocalDate} object, that will be put to the {@code #doneWork}
      * @param e             {@code Enum} object, that will be put to the {@code #doneWork}, if {@code #listOfCleanedPlaces} contains it
@@ -64,6 +64,7 @@ public class Swabber extends Employee implements Work {
     @Override
     public void doWork(LocalDate endTimeOfTask, Enum e) {
         try {
+
             if (isHaveJob == true) {
                 if (listOfCleanedPlaces.contains(e)) {
 
