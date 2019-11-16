@@ -21,13 +21,6 @@
             <email>alexandra.szabo@neuron.hu</email>
         </developer>
     </developers>
-    <scm>
-        <connection>scm:https://github.com/Wrigozo/Zoo.git</connection>
-    </scm>
-    <url>neuron.hu</url>
-    <organization>
-        <name>Neuron Szoftver</name>
-    </organization>
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>

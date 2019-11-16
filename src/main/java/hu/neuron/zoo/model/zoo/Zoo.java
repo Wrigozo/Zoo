@@ -37,9 +37,17 @@ public class Zoo implements Serializable {
             }
 
             from.listOfGondoZoos.clear();
-
             if (to.director == null) {
-                to.employ(from.director, LocalDate.now());
+                if(from.director != null) {
+                    to.employ(from.director, LocalDate.now());
+                }
+                else{
+                    to.director=null;
+                }
+            }
+            else{
+                System.out.println(to.director.getName());
+                from.director=null;
             }
 
             from.fire();
