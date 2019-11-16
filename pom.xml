@@ -8,8 +8,8 @@
     <artifactId>zoo</artifactId>
     <version>1.0</version>
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>12</maven.compiler.source>
+        <maven.compiler.target>12</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
     </properties>
@@ -20,6 +20,13 @@
             <email>alexandra.szabo@neuron.hu</email>
         </developer>
     </developers>
+    <scm>
+        <connection>scm:https://github.com/Wrigozo/Zoo.git</connection>
+        <url>neuron.hu</url>
+    </scm>
+    <organization>
+        <name>Neuron Szoftver</name>
+    </organization>
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>

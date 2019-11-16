@@ -15,7 +15,14 @@ public class Director extends Employee {
 
     public Director(String lName, String fName, LocalDate bDate, Gender g) {
 
-        super(lName,fName,bDate,g);
+        super(lName, fName, bDate, g);
+    }
+
+    /**
+     * Director cannot be rewarded.
+     */
+    @Override
+    protected void printGivesReward() {
     }
 
 }

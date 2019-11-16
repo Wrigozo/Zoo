@@ -50,7 +50,7 @@ public class Animal implements Serializable {
         }
         Animal g = (Animal) obj;
 
-        return  species.equals(g.species) &&
+        return species.equals(g.species) &&
                 nickName.equals(g.nickName) &&
                 birthDate.equals(g.birthDate) &&
                 gender.equals(g.gender);

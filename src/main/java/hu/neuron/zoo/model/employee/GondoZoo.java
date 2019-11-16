@@ -16,11 +16,14 @@ import java.util.Map;
 public class GondoZoo extends Employee implements Work {
 
     /**
-     * A {@code List}&lt;{@code Species}&gt; type object, reprezents the list of the species that cared by the {@link GondoZoo}.
+     * A {@code List}&lt;{@code Species}&gt; type object, reprezents the list of the species that cared by the {@code GondoZoo}.
      */
     private List<Species> listOfCaredSpecies = new LinkedList<>();
 
-    private Map<LocalDate, Species> done = new HashMap<LocalDate, Species>();
+    /**
+     * A {@code Map}&lt;{@code LocalDate}, {@code Species}&gt; type object, that stores the work done.
+     */
+    private Map<LocalDate, Species> doneWork = new HashMap<LocalDate, Species>();
 
     private boolean isHaveJob;
 
@@ -29,13 +32,21 @@ public class GondoZoo extends Employee implements Work {
 
     public GondoZoo(String lName, String fName, LocalDate bDate, Gender g) {
 
-        super(lName,fName,bDate,g);
+        super(lName, fName, bDate, g);
     }
 
     /**
-     * Adds the given object to the {@code List}&lt;{@link Species}&gt; caredSpecies.
+     * Print the reward to those who have been working for more than 5 years.
+     */
+    @Override
+    public void printGivesReward() {
+        System.out.println(getName() + " gondozó rendkívül jól dolgozott az elmúlt 5 év folyamán, így jutalomban részesül! Gratulálunk!");
+    }
+
+    /**
+     * Adds the given object to the {@code List}&lt;{@code Species}&gt; caredSpecies.
      *
-     * @param spec a {@code Species} type of object, that will be added to {@code List}&lt;{@link Species}&gt; caredSpecies.
+     * @param spec a {@code Species} type of object, that will be added to {@code List}&lt;{@code Species}&gt; caredSpecies.
      */
     public boolean addSpecies(Species spec) {
         return listOfCaredSpecies.add(spec);
@@ -48,13 +59,21 @@ public class GondoZoo extends Employee implements Work {
         }
     }
 
+    /**
+     * Stores the work done.
+     * First examines that the {@code GondoZoo} has job, then puts the params to the {@code doneWork}. After all puts the
+     * {@code GondoZoo} and the {@code #doneWork} to {@code Employee#storedWorks}. It also handles some error cases.
+     *
+     * @param endTimeOfTask {@code LocalDate} object, that will be put to the {@code #doneWork}
+     * @param e             {@code Enum} object, that will be put to the {@code #doneWork}, if {@code #listOfCaredSpecies} contains it
+     */
     @Override
     public void doWork(LocalDate endTimeOfTask, Enum e) {
         try {
             if (isHaveJob == true) {
                 if (listOfCaredSpecies.contains(e)) {
-                    done.put(endTimeOfTask, (Species) e);
-                    storedWorks.put(this, done);
+                    doneWork.put(endTimeOfTask, (Species) e);
+                    storedWorks.put(this, doneWork);
                 } else {
                     System.out.println("Ezt a fajtát nem gondozza " + getName());
                 }

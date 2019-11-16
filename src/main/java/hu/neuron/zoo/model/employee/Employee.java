@@ -6,11 +6,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
 
 @Getter
 @Setter
@@ -24,9 +21,17 @@ public abstract class Employee implements Serializable {
 
     protected Gender gender;
 
+    /**
+     * Represents the first workday of employee.
+     */
+    protected LocalDate startWorkingDate;
+
+    /**
+     * Stores the employee, the the first workday, and the task in a map.
+     */
     public static Map<Employee, Map> storedWorks = new HashMap<Employee, Map>();
 
-    public Employee(){
+    public Employee() {
 
     }
 
@@ -42,6 +47,7 @@ public abstract class Employee implements Serializable {
 
     }
 
+    abstract void printGivesReward();
 
     /**
      * Gives the whole name of the Employee.

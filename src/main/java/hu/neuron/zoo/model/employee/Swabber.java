@@ -16,11 +16,14 @@ import java.util.Map;
 public class Swabber extends Employee implements Work {
 
     /**
-     * A {@code List}&lt;{@code Places}&gt; type object, reprezents the list of the places that cleaned by the {@link Swabber}.
+     * A {@code List}&lt;{@code Places}&gt; type object, reprezents the list of the places that cleaned by the {@code Swabber}.
      */
     private List<Places> listOfCleanedPlaces = new LinkedList<Places>();
 
-    private Map<LocalDate, Places> done = new HashMap<LocalDate, Places>();
+    /**
+     * A {@code Map}&lt;{@code LocalDate},{@code Places}&gt; type object, that stores the work done.
+     */
+    private Map<LocalDate, Places> doneWork = new HashMap<LocalDate, Places>();
 
     private boolean isHaveJob;
 
@@ -29,21 +32,45 @@ public class Swabber extends Employee implements Work {
 
     public Swabber(String lName, String fName, LocalDate bDate, Gender g) {
 
-       super(lName,fName,bDate,g);
+        super(lName, fName, bDate, g);
     }
 
+    /**
+     * Print the reward to those who have been working for more than 5 years.
+     */
+    @Override
+    public void printGivesReward() {
+        System.out.println(getName() + " takarító rendkívül jól dolgozott az évek folyamán, így jutalomban részesül! Gratulálunk!");
+    }
+
+    /**
+     * Possibility to add {@code Places} to be cleaned to the {@code Swabber}.
+     *
+     * @param p {@code Places} object, that will be add
+     */
     public void addPlaces(Places p) {
         listOfCleanedPlaces.add(p);
     }
 
+    /**
+     * Stores the work done.
+     * First examines that the {@code Swabber} has job, then puts the params to the {@code doneWork}. After all puts the
+     * {@code Swabber} and the {@code #doneWork} to {@code Employee#storedWorks}.
+     * It also handles some error cases
+     *
+     * @param endTimeOfTask {@code LocalDate} object, that will be put to the {@code #doneWork}
+     * @param e             {@code Enum} object, that will be put to the {@code #doneWork}, if {@code #listOfCleanedPlaces} contains it
+     */
     @Override
     public void doWork(LocalDate endTimeOfTask, Enum e) {
         try {
             if (isHaveJob == true) {
                 if (listOfCleanedPlaces.contains(e)) {
-                    done.put(endTimeOfTask, (Places) e);
-                    storedWorks.put(this, done);
+
+                    doneWork.put(endTimeOfTask, (Places) e);
+                    storedWorks.put(this, doneWork);
                 } else {
+
                     System.out.println("Ezt a helyet nem takarítja " + getName());
                 }
             } else {
