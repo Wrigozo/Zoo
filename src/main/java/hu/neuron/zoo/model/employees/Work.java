@@ -1,7 +1,6 @@
-package hu.neuron.zoo.model.employee;
+package hu.neuron.zoo.model.employees;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface Work {
 

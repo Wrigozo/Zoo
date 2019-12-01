@@ -1,7 +1,7 @@
 package hu.neuron.zoo.model.animals;
 
-import hu.neuron.zoo.model.enumsofzoo.Gender;
-import hu.neuron.zoo.model.enumsofzoo.Species;
+import hu.neuron.zoo.model.enums.Gender;
+import hu.neuron.zoo.model.enums.Species;
 import lombok.Getter;
 import lombok.Setter;
 

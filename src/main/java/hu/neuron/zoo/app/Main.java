@@ -1,94 +1,119 @@
 package hu.neuron.zoo.app;
 
 import hu.neuron.zoo.model.animals.Animal;
-import hu.neuron.zoo.model.employee.Director;
-import hu.neuron.zoo.model.employee.GondoZoo;
-import hu.neuron.zoo.model.employee.Swabber;
-import hu.neuron.zoo.model.enumsofzoo.Gender;
-import hu.neuron.zoo.model.enumsofzoo.Places;
-import hu.neuron.zoo.model.enumsofzoo.Species;
+import hu.neuron.zoo.model.employees.Director;
+import hu.neuron.zoo.model.employees.GondoZoo;
+import hu.neuron.zoo.model.employees.Swabber;
+import hu.neuron.zoo.model.enums.Gender;
+import hu.neuron.zoo.model.enums.Places;
+import hu.neuron.zoo.model.enums.Species;
+import hu.neuron.zoo.model.exceptions.GondozooNotAvailableException;
+import hu.neuron.zoo.model.exceptions.ZooEmployeeException;
+import hu.neuron.zoo.model.exceptions.ZooException;
+import hu.neuron.zoo.model.serializer.ZooSerializer;
 import hu.neuron.zoo.model.zoo.Zoo;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class Main {
-    public static void main(String[] args) {
-        //a
+    public static void main(String[] args) throws ZooEmployeeException, GondozooNotAvailableException, IOException {
+
         System.out.print("a ");
         Zoo firstZoo = new Zoo();
-        //b
+
         System.out.print("b ");
         Director erik = new Director("Erik", "Hidi", LocalDate.of(2000, 7, 25), Gender.MALE);
         firstZoo.employ(erik, LocalDate.now());
 
-        //c
         System.out.print("c ");
         Animal sanyi = new Animal(Species.GIRAFFE, "Sándor", LocalDate.of(1998, 7, 23), Gender.MALE);
-        firstZoo.addAnimal(sanyi);
-        //d
+        try {
+            firstZoo.add(sanyi);
+        } catch (GondozooNotAvailableException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.print("d ");
         GondoZoo feco = new GondoZoo("Fecó", "Szabó", LocalDate.of(1997, 12, 4), Gender.MALE);
-        feco.addSpecies(Species.GIRAFFE);
+        feco.add(Species.GIRAFFE);
         firstZoo.employ(feco, LocalDate.of(2010, 1, 1));
-        //e
+
         System.out.print("e ");
-        firstZoo.addAnimal(sanyi);
-        //f
+        try {
+            firstZoo.add(sanyi);
+        } catch (GondozooNotAvailableException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.print("f ");
         Director roland = new Director("Roland", "Kállai", LocalDate.of(1998, 7, 23), Gender.MALE);
         firstZoo.employ(roland, LocalDate.of(2010, 1, 1));
-        //g
+
         System.out.println("g ");
         GondoZoo robi = new GondoZoo("Róbert", "Dékány", LocalDate.of(1997, 11, 20), Gender.MALE);
-        robi.addSpecies(Species.DOLPHIN);
-        robi.addSpecies(Species.MONKEY);
+        robi.add(Species.DOLPHIN);
+        robi.add(Species.MONKEY);
         robi.doWork(LocalDate.of(2019, 11, 13), Species.MONKEY);
-        robi.addSpecies(Species.ZEBRA);
+        robi.add(Species.ZEBRA);
         firstZoo.employ(robi, LocalDate.now());
-        //h
+
         System.out.print("h ");
         Animal zsuzsi = new Animal(Species.DOLPHIN, "Zsuzsi", LocalDate.of(1998, 7, 23), Gender.FEMALE);
-        firstZoo.addAnimal(zsuzsi);
-        //i
-        System.out.println("Az állatkert állatai:");
+        try {
+            firstZoo.add(zsuzsi);
+        } catch (GondozooNotAvailableException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("i\nAz állatkert állatai:");
         firstZoo.printAnimals();
-        //j
-        System.out.println("Az állatkert állatai rendezve:");
-        firstZoo.printSortedAnimalByNickname();
-        //k
+
+        System.out.println("j\n Az állatkert állatai rendezve:");
+        firstZoo.printAnimals();
+
         System.out.print("k ");
         Zoo secondZoo = new Zoo();
-        //l
+
         System.out.print("l ");
         Zoo.printHowManyZoos();
         firstZoo.printReward();
-        //m
+
         System.out.print("m ");
         Zoo.Move.moved(firstZoo, secondZoo);
-        //n
+
         System.out.print("n ");
         firstZoo.printAnimals();
         firstZoo.printEmployees();
-        //o
+
         System.out.print("o ");
         secondZoo.printAnimals();
         secondZoo.printEmployees();
-        //p
+
         System.out.print("p ");
         secondZoo.fire();
-        //q
+
         System.out.print("q ");
-        //secondZoo.fire(feco);
-        //r
+        try {
+            secondZoo.fire(feco);
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.print("r ");
-        secondZoo.removeAnimal(sanyi);
-        //s
+        secondZoo.remove(sanyi);
+
         System.out.print("s ");
-        secondZoo.removeAnimal(zsuzsi);
-        //t
+        secondZoo.remove(zsuzsi);
+
         System.out.print("t ");
-        //secondZoo.fire(robi);
-        //u
+        try {
+            secondZoo.fire(robi);
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.print("u ");
         secondZoo.printAnimals();
         secondZoo.printEmployees();
@@ -102,36 +127,92 @@ public class Main {
         robi.doWork(LocalDate.of(2019, 11, 12), Species.MONKEY);
         feco.doWork(LocalDate.of(2019, 1, 1), Species.GIRAFFE);
         Swabber peti = new Swabber("Péter", "Versényi", LocalDate.of(1, 1, 1), Gender.MALE);
-        peti.addPlaces(Places.TERRARIUM);
+        peti.add(Places.TERRARIUM);
         peti.doWork(LocalDate.of(2, 2, 2), Places.CAGE);
         secondZoo.employ(peti, LocalDate.now());
         peti.doWork(LocalDate.now(), Places.TERRARIUM);
         secondZoo.printStoredWorks();
-        secondZoo.addAnimal(sanyi);
+
+        try {
+            secondZoo.add(sanyi);
+        } catch (GondozooNotAvailableException e) {
+            System.out.println(e.getMessage());
+        }
+
         secondZoo.printEmployees();
         secondZoo.printHowManyAnimal();
+
         System.out.println("firstzoo");
+
         Animal juli = new Animal(Species.TIGER, "Juli", LocalDate.of(1, 1, 1), Gender.FEMALE);
-        firstZoo.addAnimal(juli);
+
+        try {
+            firstZoo.add(juli);
+        } catch (GondozooNotAvailableException e) {
+            System.out.println(e.getMessage());
+        }
         GondoZoo andris = new GondoZoo("andris", "berki", LocalDate.of(2000, 1, 1), Gender.MALE);
-        andris.addSpecies(Species.TIGER);
+        andris.add(Species.TIGER);
         firstZoo.employ(andris, LocalDate.now());
-        firstZoo.addAnimal(juli);
+
+        try {
+            firstZoo.add(juli);
+        } catch (GondozooNotAvailableException e) {
+            System.out.println(e.getMessage());
+        }
+
         firstZoo.employ(robi, LocalDate.now());
         firstZoo.printAnimals();
         firstZoo.printEmployees();
-//        firstZoo.fire(andris);
-//        firstZoo.printEmployees();
+
+        try {
+            firstZoo.fire(andris);
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
+
+        firstZoo.printEmployees();
         robi.doWork(LocalDate.of(2019, 11, 14), Species.DOLPHIN);
-        System.out.println("secondzoo");
+
         secondZoo.printStoredWorks();
 
-        System.out.println("move");
-        Zoo.Move.moved( secondZoo, firstZoo);
-        firstZoo.printEmployees();
-        firstZoo.printAnimals();
-        firstZoo.printReward();
+        System.out.println("MOVE");
 
+        try {
+            Zoo.Move.moved(secondZoo, firstZoo);
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
+
+        firstZoo.printEmployees();
+
+        firstZoo.employ(feco,LocalDate.now());
+        firstZoo.printReward();
+        Animal zoli = new Animal(Species.DOLPHIN, "Zoli", LocalDate.of(2010, 1, 1), Gender.MALE);
+        Animal bence = new Animal(Species.GIRAFFE, "Bence", LocalDate.of(2000, 1, 1), Gender.MALE);
+
+        try {
+            firstZoo.add(zoli);
+            firstZoo.add(bence);
+        } catch (GondozooNotAvailableException e) {
+            System.out.println(e.getMessage());
+        }
+
+        firstZoo.printAnimals();
+
+        firstZoo.printAnimals(Species.GIRAFFE);
+
+        System.out.println("SERIALIZING");
+        ZooSerializer zs=new ZooSerializer(firstZoo, "c:\\temp\\zoo.txt\\");
+
+        zs.Serializing();
+        firstZoo.printEmployees();
+        Zoo thirdZoo=new Zoo();
+        System.out.println("DESERIALIZING");
+        thirdZoo=zs.Deserializing();
+        thirdZoo.printEmployees();
+        thirdZoo.printAnimals();
     }
+
 
 }

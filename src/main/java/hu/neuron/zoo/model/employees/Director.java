@@ -1,6 +1,6 @@
-package hu.neuron.zoo.model.employee;
+package hu.neuron.zoo.model.employees;
 
-import hu.neuron.zoo.model.enumsofzoo.Gender;
+import hu.neuron.zoo.model.enums.Gender;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,12 +17,4 @@ public class Director extends Employee {
 
         super(lName, fName, bDate, g);
     }
-
-    /**
-     * Director cannot be rewarded.
-     */
-    @Override
-    protected void printGivesReward() {
-    }
-
 }

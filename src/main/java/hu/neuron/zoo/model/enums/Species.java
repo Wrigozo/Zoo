@@ -1,4 +1,4 @@
-package hu.neuron.zoo.model.enumsofzoo;
+package hu.neuron.zoo.model.enums;
 
 public enum Species {
     MONKEY,

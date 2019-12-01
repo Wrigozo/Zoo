@@ -1,6 +1,6 @@
-package hu.neuron.zoo.model.employee;
+package hu.neuron.zoo.model.employees;
 
-import hu.neuron.zoo.model.enumsofzoo.Gender;
+import hu.neuron.zoo.model.enums.Gender;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,10 +29,10 @@ public abstract class Employee implements Serializable {
     /**
      * Stores the {@code Employee}, the the first workday, and the task in a map.
      */
+    @Getter
     public static Map<Employee, Map> storedWorks = new HashMap<Employee, Map>();
 
     public Employee() {
-
     }
 
     public Employee(String lName, String fName, LocalDate bDate, Gender g) {
@@ -44,10 +44,7 @@ public abstract class Employee implements Serializable {
         birthDate = bDate;
 
         gender = g;
-
     }
-
-    abstract void printGivesReward();
 
     /**
      * Gives the whole name of the Employee.

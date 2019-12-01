@@ -1,31 +1,11 @@
-package hu.neuron.zoo.model.employee;
+package hu.neuron.zoo.model.employees;
 
-import hu.neuron.zoo.model.enumsofzoo.Gender;
-import hu.neuron.zoo.model.enumsofzoo.Species;
-import lombok.Getter;
-import lombok.Setter;
+import hu.neuron.zoo.model.enums.Gender;
+import hu.neuron.zoo.model.enums.Species;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
-@Getter
-@Setter
-public class GondoZoo extends Employee implements Work {
-
-    /**
-     * A {@code List}&lt;{@code Species}&gt; type object, reprezents the list of the {@code Species} that cared by the {@code GondoZoo}.
-     */
-    private List<Species> listOfCaredSpecies = new LinkedList<>();
-
-    /**
-     * A {@code Map}&lt;{@code LocalDate}, {@code Species}&gt; type object, that stores the work done.
-     */
-    private Map<LocalDate, Species> doneWork = new HashMap<LocalDate, Species>();
-
-    private boolean isHaveJob;
+public class GondoZoo extends GenericEmployee<Species> implements Work {
 
     private GondoZoo() {
     }
@@ -33,30 +13,6 @@ public class GondoZoo extends Employee implements Work {
     public GondoZoo(String lName, String fName, LocalDate bDate, Gender g) {
 
         super(lName, fName, bDate, g);
-    }
-
-    /**
-     * Print the reward to those who have been working for more than 5 years.
-     */
-    @Override
-    public void printGivesReward() {
-        System.out.println(getName() + " gondozó rendkívül jól dolgozott az elmúlt 5 év folyamán, így jutalomban részesül! Gratulálunk!");
-    }
-
-    /**
-     * Adds the given object to the {@code #caredSpecies}.
-     *
-     * @param spec a {@code Species} type of object, that will be added to {@code List}&lt;{@code Species}&gt; {@code #caredSpecies}.
-     */
-    public boolean addSpecies(Species spec) {
-        return listOfCaredSpecies.add(spec);
-    }
-
-    public void printCaredAnimals() {
-
-        for (Species s : listOfCaredSpecies) {
-            System.out.println(s + " ");
-        }
     }
 
     /**
@@ -71,7 +27,7 @@ public class GondoZoo extends Employee implements Work {
     public void doWork(LocalDate endTimeOfTask, Enum e) {
         try {
             if (isHaveJob == true) {
-                if (listOfCaredSpecies.contains(e)) {
+                if (providingList.contains(e)) {
                     doneWork.put(endTimeOfTask, (Species) e);
                     storedWorks.put(this, doneWork);
                 } else {
@@ -102,6 +58,6 @@ public class GondoZoo extends Employee implements Work {
                 firstName.equals(g.firstName) &&
                 birthDate.equals(g.birthDate) &&
                 gender.toString().equals(g.gender.toString()) &&
-                listOfCaredSpecies.equals(g.listOfCaredSpecies);
+                providingList.equals(g.providingList);
     }
 }

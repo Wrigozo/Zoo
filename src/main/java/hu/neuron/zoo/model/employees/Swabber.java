@@ -1,31 +1,11 @@
-package hu.neuron.zoo.model.employee;
+package hu.neuron.zoo.model.employees;
 
-import hu.neuron.zoo.model.enumsofzoo.Gender;
-import hu.neuron.zoo.model.enumsofzoo.Places;
-import lombok.Getter;
-import lombok.Setter;
+import hu.neuron.zoo.model.enums.Gender;
+import hu.neuron.zoo.model.enums.Places;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
-@Getter
-@Setter
-public class Swabber extends Employee implements Work {
-
-    /**
-     * A {@code List}&lt;{@code Places}&gt; type object, reprezents the list of the {@code Places} that cleaned by the {@code Swabber}.
-     */
-    private List<Places> listOfCleanedPlaces = new LinkedList<Places>();
-
-    /**
-     * A {@code Map}&lt;{@code LocalDate},{@code Places}&gt; type object, that stores the work done.
-     */
-    private Map<LocalDate, Places> doneWork = new HashMap<LocalDate, Places>();
-
-    private boolean isHaveJob;
+public class Swabber extends GenericEmployee<Places> implements Work {
 
     private Swabber() {
     }
@@ -33,23 +13,6 @@ public class Swabber extends Employee implements Work {
     public Swabber(String lName, String fName, LocalDate bDate, Gender g) {
 
         super(lName, fName, bDate, g);
-    }
-
-    /**
-     * Print the reward to those who have been working for more than 5 years.
-     */
-    @Override
-    public void printGivesReward() {
-        System.out.println(getName() + " takarító rendkívül jól dolgozott az évek folyamán, így jutalomban részesül! Gratulálunk!");
-    }
-
-    /**
-     * Possibility to add {@code Places} to be cleaned to the {@code Swabber}.
-     *
-     * @param p {@code Places} object, that will be add
-     */
-    public void addPlaces(Places p) {
-        listOfCleanedPlaces.add(p);
     }
 
     /**
@@ -66,7 +29,7 @@ public class Swabber extends Employee implements Work {
         try {
 
             if (isHaveJob == true) {
-                if (listOfCleanedPlaces.contains(e)) {
+                if (providingList.contains(e)) {
 
                     doneWork.put(endTimeOfTask, (Places) e);
                     storedWorks.put(this, doneWork);
@@ -96,10 +59,10 @@ public class Swabber extends Employee implements Work {
         }
         Swabber s = (Swabber) obj;
 
-        return lastName.equals(s.lastName) &&
+        return  lastName.equals(s.lastName) &&
                 firstName.equals(s.firstName) &&
                 birthDate.equals(s.birthDate) &&
                 gender.toString().equals(s.gender.toString()) &&
-                listOfCleanedPlaces.equals(s.listOfCleanedPlaces);
+                providingList.equals(s.providingList);
     }
 }

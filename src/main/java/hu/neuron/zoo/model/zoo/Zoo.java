@@ -1,8 +1,10 @@
 package hu.neuron.zoo.model.zoo;
 
 import hu.neuron.zoo.model.animals.Animal;
-import hu.neuron.zoo.model.employee.*;
-import hu.neuron.zoo.model.enumsofzoo.Species;
+import hu.neuron.zoo.model.employees.*;
+import hu.neuron.zoo.model.enums.Species;
+import hu.neuron.zoo.model.exceptions.GondozooNotAvailableException;
+import hu.neuron.zoo.model.exceptions.ZooEmployeeException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,7 +31,7 @@ public class Zoo implements Serializable {
          * @param from {@code Zoo} object, that will be moved
          * @param to   {@code Zoo} object, where {@code #from} will be moved
          */
-        public static void moved(Zoo from, Zoo to) {
+        public static void moved(Zoo from, Zoo to) throws ZooEmployeeException, GondozooNotAvailableException {
 
             for (GondoZoo g : from.listOfGondoZoos) {
                 g.setHaveJob(false);
@@ -38,16 +40,14 @@ public class Zoo implements Serializable {
 
             from.listOfGondoZoos.clear();
             if (to.director == null) {
-                if(from.director != null) {
+                if (from.director != null) {
                     to.employ(from.director, LocalDate.now());
+                } else {
+                    to.director = null;
                 }
-                else{
-                    to.director=null;
-                }
-            }
-            else{
+            } else {
                 System.out.println(to.director.getName());
-                from.director=null;
+                from.director = null;
             }
 
             from.fire();
@@ -60,7 +60,7 @@ public class Zoo implements Serializable {
             from.listOfGondoZoos.clear();
 
             for (Animal a : from.listOfAnimals) {
-                to.addAnimal(a);
+                to.add(a);
             }
 
             from.listOfAnimals.clear();
@@ -175,10 +175,10 @@ public class Zoo implements Serializable {
     /**
      * Fires the director.
      */
-    public void fire() {
+    public void fire() throws ZooEmployeeException {
 
         if (director == null) {
-            System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
+            throw new ZooEmployeeException(director);
         } else {
 
             System.out.println("Az állatkert " + director.getName() + " igazgatója eltávozott!");
@@ -195,7 +195,7 @@ public class Zoo implements Serializable {
      *
      * @param g a {@code GondoZoo} object, who will be fired
      */
-    public void fire(GondoZoo g) {
+    public void fire(GondoZoo g) throws ZooEmployeeException {
 
         if (listOfGondoZoos == null) {
             System.out.print("Nincs dolgozó!");
@@ -213,10 +213,10 @@ public class Zoo implements Serializable {
                 if (isSpeciesCaredBy(g)) {
 
                     for (GondoZoo go : listOfGondoZoos) {
-                        for (Species sg : g.getListOfCaredSpecies()) {
+                        for (Species sg : g.getProvidingList()) {
 
-                            if (!go.getListOfCaredSpecies().contains(sg)) {
-                                System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", sg);
+                            if (!go.getProvidingList().contains(sg)) {
+                                throw new ZooEmployeeException(sg);
                             }
                         }
                     }
@@ -257,16 +257,16 @@ public class Zoo implements Serializable {
      *
      * @param a the {@code Animal}, whose species are examined
      */
-    public void addAnimal(Animal a) {
+    public void add(Animal a) throws GondozooNotAvailableException {
 
         if (isCaredSpecies(a)) {
             listOfAnimals.add(a);
         } else {
-            System.out.printf("Az állatkertnek szüksége van %s gondozóra!\n", a.getSpecies());
+            throw new GondozooNotAvailableException(a);
         }
     }
 
-    public void removeAnimal(Animal a) {
+    public void remove(Animal a) {
 
         for (Animal an : listOfAnimals) {
 
@@ -325,7 +325,7 @@ public class Zoo implements Serializable {
             System.out.println("Nincs gondozó!");
         } else {
             for (GondoZoo g : listOfGondoZoos) {
-                System.out.format("\tGondozó: %s, és a gondozott állat: %s%n", g.getName(), g.getListOfCaredSpecies());
+                System.out.format("\tGondozó: %s, és a gondozott állat: %s%n", g.getName(), g.getProvidingList());
             }
         }
     }
@@ -336,7 +336,7 @@ public class Zoo implements Serializable {
             System.out.println("Nincs takarító!");
         } else {
             for (Swabber s : listOfSwabbers) {
-                System.out.format("\tTakarító: %s, és a takarított hely: %s%n", s.getName(), s.getListOfCleanedPlaces());
+                System.out.format("\tTakarító: %s, és a takarított hely: %s%n", s.getName(), s.getProvidingList());
             }
         }
     }
@@ -363,7 +363,7 @@ public class Zoo implements Serializable {
     }
 
     /**
-     * Print the rewards of the gondoZoos and the swabbers.
+     * Prints the rewards of the gondoZoos and the swabbers.
      */
     public void printReward() {
 
@@ -386,28 +386,33 @@ public class Zoo implements Serializable {
         System.out.println("Az állatkertnek " + listOfAnimals.size() + " lakója van jelenleg!");
     }
 
+    /**
+     * Prints the Animal sorted by species in alphabetical order within that by nickname in alphabetical order.
+     */
     public void printAnimals() {
 
         if (listOfAnimals != null) {
 
-            System.out.print("Az állatok: ");
+            System.out.println("Az állatok: ");
 
-            for (Animal a : listOfAnimals) {
-                System.out.print(a.getNickName() + " ");
-            }
-
-            System.out.println();
+            listOfAnimals.stream()
+                    .sorted(Comparator.comparing(Animal::getNickName))
+                    .sorted(Comparator.comparing(animal -> animal.getSpecies().toString()))
+                    .forEach(s -> System.out.println("\t" + s.getNickName() + " \tfajtája: " + s.getSpecies()));
         }
     }
 
     /**
-     * Sorts the {@code Animal} by species within that by nickname.
+     * Print the animal whose species are the given value.
+     *
+     * @param s is a {@code Species} enum that by sorted the animals
      */
-    public void printSortedAnimalByNickname() {
+    public void printAnimals(Species s) {
+        System.out.println("A " + s.toString() + " fajtájú állatok: ");
         listOfAnimals.stream()
-                .sorted(Comparator.comparing(Animal::getSpecies).thenComparing(Animal::getNickName))
-                .map(s -> s.getNickName())
-                .forEach(System.out::println);
+                .filter(animal -> animal.getSpecies() == s)
+                .sorted(Comparator.comparing(Animal::getNickName))
+                .forEach(a -> System.out.println("\t" + a.getNickName()));
     }
 
     /**
@@ -420,7 +425,7 @@ public class Zoo implements Serializable {
 
         for (Animal a : listOfAnimals) {
 
-            if (g.getListOfCaredSpecies().contains(a.getSpecies())) {
+            if (g.getProvidingList().contains(a.getSpecies())) {
                 return true;
             }
         }
@@ -437,7 +442,7 @@ public class Zoo implements Serializable {
 
         for (GondoZoo g : listOfGondoZoos) {
 
-            if (g.getListOfCaredSpecies().contains(a.getSpecies())) {
+            if (g.getProvidingList().contains(a.getSpecies())) {
                 return true;
             }
         }
