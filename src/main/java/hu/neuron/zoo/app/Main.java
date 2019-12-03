@@ -5,6 +5,7 @@ import hu.neuron.zoo.model.employees.*;
 import hu.neuron.zoo.model.enums.*;
 import hu.neuron.zoo.model.exceptions.GondozooNotAvailableException;
 import hu.neuron.zoo.model.exceptions.ZooEmployeeException;
+import hu.neuron.zoo.model.properties.LanguageProperties;
 import hu.neuron.zoo.model.serializer.ZooSerializer;
 import hu.neuron.zoo.model.zoo.Zoo;
 
@@ -13,6 +14,8 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws ZooEmployeeException, GondozooNotAvailableException, IOException {
+
+        LanguageProperties props=new LanguageProperties("exception.properties");
 
         System.out.print("a ");
         Zoo firstZoo = new Zoo();
@@ -26,7 +29,7 @@ public class Main {
         try {
             firstZoo.add(sanyi);
         } catch (GondozooNotAvailableException e) {
-
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
         System.out.print("d ");
@@ -38,7 +41,7 @@ public class Main {
         try {
             firstZoo.add(sanyi);
         } catch (GondozooNotAvailableException e) {
-
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
         System.out.print("f ");
@@ -58,7 +61,7 @@ public class Main {
         try {
             firstZoo.add(zsuzsi);
         } catch (GondozooNotAvailableException e) {
-
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
         System.out.println("i\nAz állatkert állatai:");
@@ -80,7 +83,7 @@ public class Main {
         try {
             firstZoo.printEmployees();
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
         }
 
         System.out.print("o ");
@@ -89,7 +92,7 @@ public class Main {
         try {
             secondZoo.printEmployees();
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
         }
 
         System.out.print("p ");
@@ -99,7 +102,7 @@ public class Main {
         try {
             secondZoo.fire(feco);
         } catch (ZooEmployeeException e) {
-
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
         System.out.print("r ");
@@ -112,7 +115,7 @@ public class Main {
         try {
             secondZoo.fire(robi);
         } catch (ZooEmployeeException e) {
-
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
         System.out.print("u ");
@@ -121,7 +124,7 @@ public class Main {
         try {
             secondZoo.printEmployees();
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
         }
 
         secondZoo.printReward();
@@ -143,13 +146,13 @@ public class Main {
         try {
             secondZoo.add(sanyi);
         } catch (GondozooNotAvailableException e) {
-
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
         try {
             secondZoo.printEmployees();
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
         }
 
         secondZoo.printHowManyAnimal();
@@ -161,7 +164,7 @@ public class Main {
         try {
             firstZoo.add(juli);
         } catch (GondozooNotAvailableException e) {
-
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
         GondoZoo andris = new GondoZoo("andris", "berki", LocalDate.of(2000, 1, 1), Gender.MALE);
         andris.add(Species.TIGER);
@@ -170,7 +173,7 @@ public class Main {
         try {
             firstZoo.add(juli);
         } catch (GondozooNotAvailableException e) {
-
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
         firstZoo.employ(robi, LocalDate.now());
@@ -178,19 +181,19 @@ public class Main {
         try {
             firstZoo.printEmployees();
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
         }
 
         try {
             firstZoo.fire(andris);
         } catch (ZooEmployeeException e) {
-
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
         try {
             firstZoo.printEmployees();
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
         }
         robi.doWork(LocalDate.of(2019, 11, 14), Species.DOLPHIN);
 
@@ -207,7 +210,7 @@ public class Main {
         try {
             firstZoo.printEmployees();
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
         }
 
         firstZoo.employ(feco, LocalDate.now());
@@ -219,7 +222,7 @@ public class Main {
             firstZoo.add(zoli);
             firstZoo.add(bence);
         } catch (GondozooNotAvailableException e) {
-
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
         firstZoo.printAnimals();
@@ -234,7 +237,7 @@ public class Main {
         try {
             firstZoo.printEmployees();
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
         }
 
         Zoo thirdZoo = new Zoo();
@@ -244,7 +247,7 @@ public class Main {
         try {
             thirdZoo.printEmployees();
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
         }
 
         thirdZoo.printAnimals();

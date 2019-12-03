@@ -12,6 +12,5 @@ public class GondozooNotAvailableException extends ZooException {
     }
 
     public GondozooNotAvailableException(Species s) {
-        System.out.println(s + " " + props.getProperty("MISSING_GONDOZOO"));
     }
 }
