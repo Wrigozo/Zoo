@@ -233,7 +233,7 @@ public class Main {
         firstZoo.printAnimals(Species.GIRAFFE);
 
         System.out.println("SERIALIZING");
-        ZooSerializer zs=new ZooSerializer(firstZoo, "c:\\temp\\zoo.txt\\");
+        ZooSerializer zs=new ZooSerializer(firstZoo, "src/main/resources/zoo.txt");
 
         zs.Serializing();
 
