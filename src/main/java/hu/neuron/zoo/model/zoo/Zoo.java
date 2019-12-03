@@ -121,6 +121,7 @@ public class Zoo implements Serializable {
 
     /**
      * Employs a gondozoo.
+     *
      * First, examines that the {@code GondoZoo} has a job or no. If he doesn't have it, then checks: is the {@code #listOfGondoZoos}
      * contains {@code GondoZoo} or no. If he doesn't member of it, he haven't been employed yet, so could employ him.
      * After all, sets the first working date of the {@code GondoZoo}, and also he has a job now. Finally, this also handles some error cases.
@@ -148,6 +149,7 @@ public class Zoo implements Serializable {
 
     /**
      * Employs a Swabber.
+     *
      * First, examines that the {@code Swabber} has a job or no. If he doesn't have it, then checks: is the {@code #listOfSwabbers}
      * contains {@code Swabber} or no. If he doesn't member of it, he haven't been employed yet, so could employ him.
      * After all, sets the first working date of the {@code Swabber}, and also he has a job now. Finally, also handles some error cases.
@@ -189,6 +191,7 @@ public class Zoo implements Serializable {
 
     /**
      * Fires the gondozo.
+     *
      * First, examines that the list of the {@code GondoZoo} is null or no. If it is not null, tries to remove the {@code GondoZoo}.
      * If it isn't possible, handles it. Else sets the {@code GondoZoo} doesn't have job, his first working date will be null.
      * After all, examines that : are there any species of animal cared by the {@code GondoZoo} in the zoo. Finally, if it is true,
@@ -228,6 +231,7 @@ public class Zoo implements Serializable {
 
     /**
      * Fires the swabber.
+     *
      * First, examines that the list of the {@code Swabber} is null or no. If not null, tries to remove this {@code Swabber}.
      * After all, sets the {@code Swabber} doesn't have job, his first working date will be null. If the firing not successfull,
      * handles it.
@@ -343,6 +347,7 @@ public class Zoo implements Serializable {
 
     /**
      * Prints the stored works of the zoo.
+     *
      * First iterates among the storeWorks keys, and write to the console: the {@code Employee}, and his
      * works done. After that, the storeWorks values are truly maps. So iterates the values(maps), that stores
      * the date of th work, and the tasks done. Writes it to the console. Finally, examines that: is the {@code Employee} {@code GondoZoo} or {@code Swabber} type,
