@@ -8,6 +8,7 @@ import hu.neuron.zoo.model.exceptions.ZooEmployeeException;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -31,7 +32,7 @@ public class Zoo implements Serializable {
          * @param from {@code Zoo} object, that will be moved
          * @param to   {@code Zoo} object, where {@code #from} will be moved
          */
-        public static void moved(Zoo from, Zoo to) throws ZooEmployeeException, GondozooNotAvailableException {
+        public static void moved(Zoo from, Zoo to) throws ZooEmployeeException, GondozooNotAvailableException, IOException {
 
             for (GondoZoo g : from.listOfGondoZoos) {
                 g.setHaveJob(false);
@@ -175,7 +176,7 @@ public class Zoo implements Serializable {
     /**
      * Fires the director.
      */
-    public void fire() throws ZooEmployeeException {
+    public void fire() throws ZooEmployeeException, IOException {
 
         if (director == null) {
             throw new ZooEmployeeException(director);
@@ -262,7 +263,7 @@ public class Zoo implements Serializable {
         if (isCaredSpecies(a)) {
             listOfAnimals.add(a);
         } else {
-            throw new GondozooNotAvailableException(a);
+            throw new GondozooNotAvailableException(a.getSpecies());
         }
     }
 
@@ -291,7 +292,7 @@ public class Zoo implements Serializable {
         System.out.println("Az állatkert sajnos még üres!");
     }
 
-    public void printEmployees() {
+    public void printEmployees() throws ZooEmployeeException, IOException {
 
         printDirector();
 
@@ -309,11 +310,10 @@ public class Zoo implements Serializable {
             printSwabbers();
     }
 
-    public void printDirector() {
+    public void printDirector() throws ZooEmployeeException, IOException {
 
         if (director == null) {
-
-            System.out.println("Az állatkertnek nincs jelenleg igazgatója!");
+            throw new ZooEmployeeException(director);
         } else
 
             System.out.println("Az igazgató: " + director.getName());

@@ -23,7 +23,6 @@ public class ZooSerializer {
             out.writeObject(zoo);
             out.close();
             fileOut.close();
-            System.out.println("Serialized data is saved in /tmp/employee.ser");
         } catch (IOException i) {
             i.printStackTrace();
         }

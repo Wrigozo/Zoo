@@ -32,7 +32,7 @@ public class Main {
         try {
             firstZoo.add(sanyi);
         } catch (GondozooNotAvailableException e) {
-            System.out.println(e.getMessage());
+
         }
 
         System.out.print("d ");
@@ -44,7 +44,7 @@ public class Main {
         try {
             firstZoo.add(sanyi);
         } catch (GondozooNotAvailableException e) {
-            System.out.println(e.getMessage());
+
         }
 
         System.out.print("f ");
@@ -64,13 +64,10 @@ public class Main {
         try {
             firstZoo.add(zsuzsi);
         } catch (GondozooNotAvailableException e) {
-            System.out.println(e.getMessage());
+
         }
 
         System.out.println("i\nAz állatkert állatai:");
-        firstZoo.printAnimals();
-
-        System.out.println("j\n Az állatkert állatai rendezve:");
         firstZoo.printAnimals();
 
         System.out.print("k ");
@@ -85,11 +82,21 @@ public class Main {
 
         System.out.print("n ");
         firstZoo.printAnimals();
-        firstZoo.printEmployees();
+
+        try {
+            firstZoo.printEmployees();
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.print("o ");
         secondZoo.printAnimals();
-        secondZoo.printEmployees();
+
+        try {
+            secondZoo.printEmployees();
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.print("p ");
         secondZoo.fire();
@@ -98,7 +105,7 @@ public class Main {
         try {
             secondZoo.fire(feco);
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+
         }
 
         System.out.print("r ");
@@ -111,15 +118,21 @@ public class Main {
         try {
             secondZoo.fire(robi);
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+
         }
 
         System.out.print("u ");
         secondZoo.printAnimals();
-        secondZoo.printEmployees();
+
+        try {
+            secondZoo.printEmployees();
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
+
         secondZoo.printReward();
 
-        System.out.println("\n2-es feladatsor:");
+        System.out.println("2-es feladatsor:");
 
         robi.doWork(LocalDate.now(), Species.TIGER);
         robi.doWork(LocalDate.now(), Species.DOLPHIN);
@@ -136,10 +149,15 @@ public class Main {
         try {
             secondZoo.add(sanyi);
         } catch (GondozooNotAvailableException e) {
+
+        }
+
+        try {
+            secondZoo.printEmployees();
+        } catch (ZooEmployeeException e) {
             System.out.println(e.getMessage());
         }
 
-        secondZoo.printEmployees();
         secondZoo.printHowManyAnimal();
 
         System.out.println("firstzoo");
@@ -149,7 +167,7 @@ public class Main {
         try {
             firstZoo.add(juli);
         } catch (GondozooNotAvailableException e) {
-            System.out.println(e.getMessage());
+
         }
         GondoZoo andris = new GondoZoo("andris", "berki", LocalDate.of(2000, 1, 1), Gender.MALE);
         andris.add(Species.TIGER);
@@ -158,20 +176,28 @@ public class Main {
         try {
             firstZoo.add(juli);
         } catch (GondozooNotAvailableException e) {
-            System.out.println(e.getMessage());
+
         }
 
         firstZoo.employ(robi, LocalDate.now());
         firstZoo.printAnimals();
-        firstZoo.printEmployees();
-
         try {
-            firstZoo.fire(andris);
+            firstZoo.printEmployees();
         } catch (ZooEmployeeException e) {
             System.out.println(e.getMessage());
         }
 
-        firstZoo.printEmployees();
+        try {
+            firstZoo.fire(andris);
+        } catch (ZooEmployeeException e) {
+
+        }
+
+        try {
+            firstZoo.printEmployees();
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
         robi.doWork(LocalDate.of(2019, 11, 14), Species.DOLPHIN);
 
         secondZoo.printStoredWorks();
@@ -184,7 +210,11 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        firstZoo.printEmployees();
+        try {
+            firstZoo.printEmployees();
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
 
         firstZoo.employ(feco,LocalDate.now());
         firstZoo.printReward();
@@ -195,7 +225,7 @@ public class Main {
             firstZoo.add(zoli);
             firstZoo.add(bence);
         } catch (GondozooNotAvailableException e) {
-            System.out.println(e.getMessage());
+            
         }
 
         firstZoo.printAnimals();
@@ -206,11 +236,23 @@ public class Main {
         ZooSerializer zs=new ZooSerializer(firstZoo, "c:\\temp\\zoo.txt\\");
 
         zs.Serializing();
-        firstZoo.printEmployees();
+
+        try {
+            firstZoo.printEmployees();
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
+
         Zoo thirdZoo=new Zoo();
         System.out.println("DESERIALIZING");
         thirdZoo=zs.Deserializing();
-        thirdZoo.printEmployees();
+
+        try {
+            thirdZoo.printEmployees();
+        } catch (ZooEmployeeException e) {
+            System.out.println(e.getMessage());
+        }
+
         thirdZoo.printAnimals();
     }
 

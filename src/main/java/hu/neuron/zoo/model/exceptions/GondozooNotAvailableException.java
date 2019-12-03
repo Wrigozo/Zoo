@@ -1,16 +1,20 @@
 package hu.neuron.zoo.model.exceptions;
 
-import hu.neuron.zoo.model.animals.Animal;
+import hu.neuron.zoo.model.enums.Species;
 
-import java.util.Collection;
-
+/**
+ * An exception class for gondozoo not available.
+ */
 public class GondozooNotAvailableException extends ZooException {
 
-    public GondozooNotAvailableException(String message) {
-        super(message);
+    String message=props.getProperty("MISSING_GONDOZOO");
+
+    public GondozooNotAvailableException(String msg) {
+        super(msg);
     }
 
-    public GondozooNotAvailableException(Animal a) {
-        super("Az állatkertnek szüksége van " + a.getSpecies() + " gondozóra!\n");
+    public GondozooNotAvailableException(Species s) {
+        System.out.println(s+" "+props.getProperty("MISSING_GONDOZOO"));
+
     }
 }
