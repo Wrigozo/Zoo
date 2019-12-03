@@ -32,7 +32,7 @@ public class Zoo implements Serializable {
          * @param from {@code Zoo} object, that will be moved
          * @param to   {@code Zoo} object, where {@code #from} will be moved
          */
-        public static void moved(Zoo from, Zoo to) throws ZooEmployeeException, GondozooNotAvailableException, IOException {
+        public static void moved(Zoo from, Zoo to) throws ZooEmployeeException, GondozooNotAvailableException {
 
             for (GondoZoo g : from.listOfGondoZoos) {
                 g.setHaveJob(false);
@@ -178,7 +178,7 @@ public class Zoo implements Serializable {
     /**
      * Fires the director.
      */
-    public void fire() throws ZooEmployeeException, IOException {
+    public void fire() throws ZooEmployeeException {
 
         if (director == null) {
             throw new ZooEmployeeException(director);
@@ -296,7 +296,7 @@ public class Zoo implements Serializable {
         System.out.println("Az állatkert sajnos még üres!");
     }
 
-    public void printEmployees() throws ZooEmployeeException, IOException {
+    public void printEmployees()  {
 
         printDirector();
 
@@ -314,10 +314,10 @@ public class Zoo implements Serializable {
             printSwabbers();
     }
 
-    public void printDirector() throws ZooEmployeeException, IOException {
+    public void printDirector() {
 
         if (director == null) {
-            throw new ZooEmployeeException(director);
+            System.out.println("Nincs igazgató");
         } else
 
             System.out.println("Az igazgató: " + director.getName());

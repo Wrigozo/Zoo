@@ -75,7 +75,15 @@ public class Main {
         firstZoo.printReward();
 
         System.out.print("m ");
-        Zoo.Move.moved(firstZoo, secondZoo);
+        try {
+            Zoo.Move.moved(firstZoo, secondZoo);
+        }catch (GondozooNotAvailableException e){
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
+        } catch (ZooEmployeeException e){
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
+        }
+
 
         System.out.print("n ");
         firstZoo.printAnimals();
@@ -186,7 +194,10 @@ public class Main {
         try {
             Zoo.Move.moved(secondZoo, firstZoo);
         } catch (ZooEmployeeException e) {
-            System.out.println(e.getMessage());
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
+            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
+        } catch (GondozooNotAvailableException e){
+            System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
         firstZoo.printEmployees();
