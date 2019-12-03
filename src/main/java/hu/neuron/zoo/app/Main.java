@@ -1,19 +1,13 @@
 package hu.neuron.zoo.app;
 
 import hu.neuron.zoo.model.animals.Animal;
-import hu.neuron.zoo.model.employees.Director;
-import hu.neuron.zoo.model.employees.GondoZoo;
-import hu.neuron.zoo.model.employees.Swabber;
-import hu.neuron.zoo.model.enums.Gender;
-import hu.neuron.zoo.model.enums.Places;
-import hu.neuron.zoo.model.enums.Species;
+import hu.neuron.zoo.model.employees.*;
+import hu.neuron.zoo.model.enums.*;
 import hu.neuron.zoo.model.exceptions.GondozooNotAvailableException;
 import hu.neuron.zoo.model.exceptions.ZooEmployeeException;
-import hu.neuron.zoo.model.exceptions.ZooException;
 import hu.neuron.zoo.model.serializer.ZooSerializer;
 import hu.neuron.zoo.model.zoo.Zoo;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -216,7 +210,7 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        firstZoo.employ(feco,LocalDate.now());
+        firstZoo.employ(feco, LocalDate.now());
         firstZoo.printReward();
         Animal zoli = new Animal(Species.DOLPHIN, "Zoli", LocalDate.of(2010, 1, 1), Gender.MALE);
         Animal bence = new Animal(Species.GIRAFFE, "Bence", LocalDate.of(2000, 1, 1), Gender.MALE);
@@ -225,7 +219,7 @@ public class Main {
             firstZoo.add(zoli);
             firstZoo.add(bence);
         } catch (GondozooNotAvailableException e) {
-            
+
         }
 
         firstZoo.printAnimals();
@@ -233,7 +227,7 @@ public class Main {
         firstZoo.printAnimals(Species.GIRAFFE);
 
         System.out.println("SERIALIZING");
-        ZooSerializer zs=new ZooSerializer(firstZoo, "src/main/resources/zoo.txt");
+        ZooSerializer zs = new ZooSerializer(firstZoo, "src/main/resources/zoo.txt");
 
         zs.Serializing();
 
@@ -243,9 +237,9 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        Zoo thirdZoo=new Zoo();
+        Zoo thirdZoo = new Zoo();
         System.out.println("DESERIALIZING");
-        thirdZoo=zs.Deserializing();
+        thirdZoo = zs.Deserializing();
 
         try {
             thirdZoo.printEmployees();

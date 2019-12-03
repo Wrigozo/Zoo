@@ -58,19 +58,19 @@ public class ZooException extends Exception {
     }
 
     @Override
-    public String getMessage(){
+    public String getMessage() {
         String msg;
 
-        if(this.messages!=null && !this.messages.isEmpty()){
-            msg="[";
+        if (this.messages != null && !this.messages.isEmpty()) {
+            msg = "[";
 
-            for(String message : this.messages){
-                msg+=message+",";
+            for (String message : this.messages) {
+                msg += message + ",";
             }
 
-            msg= StringUtils.removeEnd(msg, ",")+"]";
+            msg = StringUtils.removeEnd(msg, ",") + "]";
 
-        }else msg= super.getMessage();
+        } else msg = super.getMessage();
 
         return msg;
     }

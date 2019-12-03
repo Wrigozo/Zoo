@@ -7,14 +7,11 @@ import hu.neuron.zoo.model.enums.Species;
  */
 public class GondozooNotAvailableException extends ZooException {
 
-    String message=props.getProperty("MISSING_GONDOZOO");
-
     public GondozooNotAvailableException(String msg) {
         super(msg);
     }
 
     public GondozooNotAvailableException(Species s) {
-        System.out.println(s+" "+props.getProperty("MISSING_GONDOZOO"));
-
+        System.out.println(s + " " + props.getProperty("MISSING_GONDOZOO"));
     }
 }

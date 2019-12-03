@@ -59,7 +59,7 @@ public class Swabber extends GenericEmployee<Places> implements Work {
         }
         Swabber s = (Swabber) obj;
 
-        return  lastName.equals(s.lastName) &&
+        return lastName.equals(s.lastName) &&
                 firstName.equals(s.firstName) &&
                 birthDate.equals(s.birthDate) &&
                 gender.toString().equals(s.gender.toString()) &&

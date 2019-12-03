@@ -12,9 +12,10 @@ import java.util.Map;
 
 @Getter
 @Setter
-abstract class GenericEmployee < E extends Enum>  extends Employee{
+abstract class GenericEmployee<E extends Enum> extends Employee {
 
-    protected GenericEmployee(){}
+    protected GenericEmployee() {
+    }
 
     protected GenericEmployee(String lName, String fName, LocalDate bDate, Gender g) {
         super(lName, fName, bDate, g);
@@ -37,15 +38,15 @@ abstract class GenericEmployee < E extends Enum>  extends Employee{
      *
      * @param e a {@code E} type of object, that will be added to {@code List}&lt;{@code E}&gt; {@code #maintenance}.
      */
-    public boolean add(E e){
-         return providingList.add(e);
+    public boolean add(E e) {
+        return providingList.add(e);
     }
 
     /**
      * Print the reward to those who have been working for more than 5 years.
      */
-    public void printGivesReward(){
-        System.out.println(getName() +" rendkívül jól dolgozott az elmúlt 5 év folyamán, így jutalomban részesül! Gratulálunk!");
+    public void printGivesReward() {
+        System.out.println(getName() + " rendkívül jól dolgozott az elmúlt 5 év folyamán, így jutalomban részesül! Gratulálunk!");
     }
 
     public void printProvidingList() {

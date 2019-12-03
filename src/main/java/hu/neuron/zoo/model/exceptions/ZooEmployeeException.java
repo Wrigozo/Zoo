@@ -10,14 +10,12 @@ import java.io.IOException;
  */
 public class ZooEmployeeException extends ZooException {
 
-    String message=props.getProperty("MISSING_GONDOZOO");
-
     public ZooEmployeeException(String msg) {
         super(msg);
     }
 
     public ZooEmployeeException(Species s) {
-        super(s.toString()+" "+props.getProperty("MISSING_GONDOZOO"));
+        super(s.toString() + " " + props.getProperty("MISSING_GONDOZOO"));
     }
 
     public ZooEmployeeException(Director d) throws IOException {
