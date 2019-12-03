@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) throws ZooEmployeeException, GondozooNotAvailableException, IOException {
 
-        LanguageProperties props=new LanguageProperties("exception.properties");
+        LanguageProperties props = new LanguageProperties("exception.properties");
 
         System.out.print("a ");
         Zoo firstZoo = new Zoo();
@@ -80,23 +80,19 @@ public class Main {
         System.out.print("n ");
         firstZoo.printAnimals();
 
-        try {
-            firstZoo.printEmployees();
-        } catch (ZooEmployeeException e) {
-            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
-        }
+        firstZoo.printEmployees();
 
         System.out.print("o ");
         secondZoo.printAnimals();
 
-        try {
-            secondZoo.printEmployees();
-        } catch (ZooEmployeeException e) {
-            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
-        }
+        secondZoo.printEmployees();
 
         System.out.print("p ");
-        secondZoo.fire();
+        try{
+            secondZoo.fire();
+        }catch (ZooEmployeeException e){
+
+        }
 
         System.out.print("q ");
         try {
@@ -121,11 +117,7 @@ public class Main {
         System.out.print("u ");
         secondZoo.printAnimals();
 
-        try {
-            secondZoo.printEmployees();
-        } catch (ZooEmployeeException e) {
-            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
-        }
+        secondZoo.printEmployees();
 
         secondZoo.printReward();
 
@@ -149,11 +141,7 @@ public class Main {
             System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
-        try {
-            secondZoo.printEmployees();
-        } catch (ZooEmployeeException e) {
-            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
-        }
+        secondZoo.printEmployees();
 
         secondZoo.printHowManyAnimal();
 
@@ -178,11 +166,8 @@ public class Main {
 
         firstZoo.employ(robi, LocalDate.now());
         firstZoo.printAnimals();
-        try {
-            firstZoo.printEmployees();
-        } catch (ZooEmployeeException e) {
-            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
-        }
+
+        firstZoo.printEmployees();
 
         try {
             firstZoo.fire(andris);
@@ -190,11 +175,8 @@ public class Main {
             System.out.println(props.props.getProperty("MISSING_GONDOZOO"));
         }
 
-        try {
-            firstZoo.printEmployees();
-        } catch (ZooEmployeeException e) {
-            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
-        }
+        firstZoo.printEmployees();
+
         robi.doWork(LocalDate.of(2019, 11, 14), Species.DOLPHIN);
 
         secondZoo.printStoredWorks();
@@ -207,11 +189,7 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        try {
-            firstZoo.printEmployees();
-        } catch (ZooEmployeeException e) {
-            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
-        }
+        firstZoo.printEmployees();
 
         firstZoo.employ(feco, LocalDate.now());
         firstZoo.printReward();
@@ -234,24 +212,15 @@ public class Main {
 
         zs.Serializing();
 
-        try {
-            firstZoo.printEmployees();
-        } catch (ZooEmployeeException e) {
-            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
-        }
+        firstZoo.printEmployees();
 
         Zoo thirdZoo = new Zoo();
         System.out.println("DESERIALIZING");
         thirdZoo = zs.Deserializing();
 
-        try {
-            thirdZoo.printEmployees();
-        } catch (ZooEmployeeException e) {
-            System.out.println(props.props.getProperty("MISSING_DIRECTOR"));
-        }
+        thirdZoo.printEmployees();
 
         thirdZoo.printAnimals();
     }
-
 
 }
